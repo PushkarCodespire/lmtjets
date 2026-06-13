@@ -1,0 +1,116 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg:       #FFF8ED;
+  --color-navy:     #142544;
+  --color-navy-mid: #0D1B38;
+  --color-charcoal: #1C1C1C;
+  --color-gold:     #B8944F;
+  --color-gold-lt:  #D7B26A;
+  --color-muted:    #9A9A8A;
+  --font-serif:     Arial, sans-serif;
+  --font-sans:      'Inter', sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body { margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #FFF8ED;
+  color: #1C1C1C;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Force lining (uppercase-height) numerals across all serif headings */
+h1, h2, h3, h4, h5, h6,
+[style*="Cormorant Garamond"],
+[style*="Cormorant"] {
+  font-variant-numeric: lining-nums tabular-nums;
+  font-feature-settings: "lnum" 1, "tnum" 1;
+}
+
+/* Cormorant Garamond is retired — render every inline Cormorant usage as Arial */
+[style*="Cormorant"] {
+  font-family: Arial, sans-serif !important;
+}
+
+/* Flip card */
+.flip-card { perspective: 1200px; }
+.flip-card-inner { position: relative; width: 100%; height: 100%; transition: transform 0.75s cubic-bezier(0.4,0,0.2,1); transform-style: preserve-3d; }
+.flip-card.flipped .flip-card-inner { transform: rotateY(180deg); }
+.flip-card-front, .flip-card-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+.flip-card-back { transform: rotateY(180deg); }
+
+/* Hero animations */
+@keyframes heroFadeUp {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.hero-item {
+  opacity: 0;
+  animation: heroFadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+.hero-scroll {
+  opacity: 0;
+  animation: heroFadeUp 1s ease forwards;
+  animation-delay: 1.4s;
+}
+
+/* Fleet card 3D flip animation */
+@keyframes fleetCardFlipIn {
+  0% {
+    transform: perspective(1200px) rotateY(-95deg) scale(0.92);
+    opacity: 0;
+  }
+  60% {
+    opacity: 1;
+  }
+  100% {
+    transform: perspective(1200px) rotateY(0deg) scale(1);
+    opacity: 1;
+  }
+}
+
+.fleet-card-flip {
+  animation: fleetCardFlipIn 0.75s cubic-bezier(0.4, 0, 0.2, 1) backwards;
+  transform-origin: center center;
+  backface-visibility: visible;
+}
+
+/* Staggered delays for each card */
+.fleet-card-flip:nth-child(1) { animation-delay: 0s; }
+.fleet-card-flip:nth-child(2) { animation-delay: 0.12s; }
+.fleet-card-flip:nth-child(3) { animation-delay: 0.24s; }
+.fleet-card-flip:nth-child(4) { animation-delay: 0.36s; }
+
+/* Arrow pulse on click */
+@keyframes arrowPulse {
+  0%   { transform: translateY(-50%) scale(1); }
+  50%  { transform: translateY(-50%) scale(0.92); }
+  100% { transform: translateY(-50%) scale(1); }
+}
+.fleet-arrow-pulse {
+  animation: arrowPulse 0.4s ease;
+}
+
+/* Scroll dot animation */
+@keyframes scrollDot {
+  0%   { transform: translateY(0);    opacity: 1; }
+  50%  { transform: translateY(8px);  opacity: 0.3; }
+  100% { transform: translateY(0);    opacity: 1; }
+}
+
+/* Sidebar slide-in */
+@keyframes sidebarSlideIn {
+  from { transform: translateX(-100%); }
+  to   { transform: translateX(0); }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: #F7F5F1; }
+::-webkit-scrollbar-thumb { background: #B8944F; border-radius: 2px; }

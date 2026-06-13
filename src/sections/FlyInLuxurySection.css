@@ -1,0 +1,168 @@
+/* FlyInLuxurySection — faithful port of the Jesko Jets "Fly in Luxury → Gulfstream 650ER"
+   scroll/morph section. Webflow tokens (em-based, base font-size:1vw → design width ~1440px)
+   scoped under .jj-flight so they don't leak into the rest of the site. */
+
+@font-face {
+  font-family: "GT America Expanded";
+  src: url("/fonts/GTAmerica-Expanded-Medium.woff2") format("woff2");
+  font-weight: 500; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "GT America Extended";
+  src: url("/fonts/GTAmerica-Extended-Medium.woff2") format("woff2");
+  font-weight: 500; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "GT America Extended";
+  src: url("/fonts/GTAmerica-Extended-Bold.woff2") format("woff2");
+  font-weight: 700; font-style: normal; font-display: swap;
+}
+
+.jj-flight {
+  --u100: 100vh;
+  --f-display: "GT America Expanded", Arial, sans-serif;
+  --f-body: "GT America Extended", Arial, sans-serif;
+  --pad: 6.666vw;          /* m-96 horizontal padding */
+  --h1-size: 6.2vw; --h1-lh: 0.84; --h1-ls: -0.09em;
+  --h2-size: 5vw;   --h2-lh: 0.9;  --h2-ls: -0.06em;
+  --p5-size: 1.7vw; --p5-lh: 1.05;
+  --p7-size: 0.95vw;
+  --l1-size: 0.78vw;
+  --ink: #312726;
+  --ink-gray: rgba(49, 39, 38, 0.5);
+  --line: rgba(49, 39, 38, 0.14);
+
+  position: relative;
+  font-family: var(--f-body);
+  color: var(--ink);
+  background: #FFF8ED;
+  font-weight: 500;
+  line-height: 1;
+}
+
+/* ── typography ── */
+.jj-flight .h1 { font-family: var(--f-display); font-size: var(--h1-size); line-height: var(--h1-lh); letter-spacing: var(--h1-ls); font-weight: 500; margin: 0; white-space: nowrap; }
+.jj-flight .h2 { font-family: var(--f-display); font-size: var(--h2-size); line-height: var(--h2-lh); letter-spacing: var(--h2-ls); font-weight: 500; margin: 0; }
+.jj-flight .p5 { font-family: var(--f-body); font-size: var(--p5-size); line-height: var(--p5-lh); font-weight: 500; margin: 0; }
+.jj-flight .p7 { font-family: var(--f-body); font-size: var(--p7-size); line-height: 1.5; font-weight: 500; margin: 0; }
+.jj-flight .l1 { font-family: var(--f-body); font-size: var(--l1-size); line-height: 1.2; letter-spacing: 0.02em; text-transform: uppercase; font-weight: 700; margin: 0; }
+.jj-flight .text-gray { color: var(--ink-gray); }
+.jj-flight .line-h { background-color: var(--line); height: 1px; width: 100%; }
+
+/* ── scroll stage ── */
+.jj-flight .jet_scroll-area { height: calc(var(--u100) * 5.5); position: relative; }
+.jj-flight .jet-switcher {
+  position: sticky; top: 0;
+  height: var(--u100);
+  overflow: hidden;
+  background: linear-gradient(180deg, #8fb8cf 0%, #b6d0de 28%, #dde6e2 58%, #FFF8ED 100%);
+}
+
+/* sky + drifting clouds */
+.jj-flight .jet-sky {
+  position: absolute; inset: 0; z-index: 0;
+  background: url("/sky-about.avif") center top / cover no-repeat;
+  opacity: 0.85;
+}
+.jj-flight .jet-clouds {
+  position: absolute; top: 0; left: 0; right: 0; height: 70%; z-index: 0;
+  background: url("/clouds.webp") repeat-x left top;
+  background-size: auto 100%;
+  opacity: 0.7;
+  animation: jj-marquee 60s linear infinite;
+  pointer-events: none;
+}
+@keyframes jj-marquee { from { background-position-x: 0; } to { background-position-x: -2000px; } }
+
+/* cream background that fades in over the sky */
+.jj-flight .light-bg {
+  z-index: 1; position: absolute; inset: 0;
+  background: linear-gradient(180deg, #cfcabf 0%, #FFF8ED 55%);
+  opacity: 0;
+}
+
+/* ── TITLE VIEW (Fly in / Luxury) — slides DOWN out on scroll ── */
+.jj-flight .jet-w { position: absolute; inset: 0; z-index: 2; will-change: transform; }
+.jj-flight .title-row {
+  position: absolute; top: 44%; left: var(--pad); right: var(--pad);
+  display: flex; justify-content: space-between; align-items: baseline;
+}
+.jj-flight .title-sub { position: absolute; top: 63%; left: var(--pad); }
+.jj-flight .title-desc { position: absolute; bottom: 6%; right: var(--pad); width: 27vw; }
+.jj-flight .title-desc_head { display: flex; justify-content: space-between; align-items: center; gap: 1em; margin: 0.8em 0 1.6em; }
+
+/* ── SPEC VIEW (Gulfstream 650ER) — slides DOWN in on scroll ── */
+.jj-flight .spec-w { position: absolute; left: 0; right: 0; bottom: 100%; z-index: 2; will-change: transform; }
+.jj-flight .spec-s {
+  height: var(--u100); display: flex; flex-flow: column;
+  padding: 6vw var(--pad) 3vw; box-sizing: border-box;
+}
+.jj-flight .spec-row { flex: 1; display: flex; gap: 2vw; min-height: 0; padding-top: 2vw; }
+.jj-flight .spec-s_left, .jj-flight .spec-s_right {
+  flex: 1 1 0; display: flex; flex-flow: column; justify-content: space-between; min-width: 0;
+}
+.jj-flight .spec-s_center { flex: 0 0 40vw; }
+.jj-flight .spec-grid { display: grid; grid-template-columns: 1fr 1fr; column-gap: 1vw; row-gap: 1.4vw; }
+.jj-flight .l1-item { display: flex; flex-flow: column; gap: 0.45em; }
+.jj-flight .spec-block + .spec-block { margin-top: 1.6vw; }
+.jj-flight .spec-pair { display: flex; justify-content: space-between; gap: 1em; padding: 0.25em 0; }
+
+/* jet switcher: progress timeline + arrows (bottom-right of spec view) */
+.jj-flight .spec-switcher { align-self: stretch; display: flex; flex-direction: column; gap: 16px; }
+.jj-flight .spec-progress { width: 100%; height: 2px; background: rgba(20,37,68,0.14); overflow: hidden; }
+.jj-flight .spec-progress-fill {
+  display: block; height: 100%; width: 0; background: var(--ink);
+  animation: specFill 6s linear forwards;
+}
+@keyframes specFill { from { width: 0; } to { width: 100%; } }
+.jj-flight .spec-arrows { display: flex; gap: 0.7vw; align-self: flex-end; }
+.jj-flight .spec-arrows button {
+  width: 2.9vw; height: 2.9vw; border-radius: 999px;
+  border: 1px solid var(--line); background: transparent; color: var(--ink);
+  display: grid; place-items: center; cursor: pointer; pointer-events: auto;
+  transition: background 0.25s, color 0.25s, border-color 0.25s;
+}
+.jj-flight .spec-arrows button:hover { background: var(--ink); color: #fff; border-color: var(--ink); }
+
+/* ── JET (exterior + blueprint, cross-masked morph) ── */
+.jj-flight .jet {
+  position: absolute; inset: 0; z-index: 3;
+  display: grid; place-items: center;
+  pointer-events: none; will-change: transform;
+}
+.jj-flight .jet-imgs {
+  position: absolute; left: 50%; top: 50%;
+  height: 150vh; width: auto; aspect-ratio: 540 / 591;
+  will-change: transform;
+}
+.jj-flight .img-jet, .jj-flight .blueprint {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain;
+}
+
+/* exterior dissolves out (globe mask) */
+.jj-flight .img-jet {
+  -webkit-mask-image: url("/globe-mask.webp"); mask-image: url("/globe-mask.webp");
+  -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+  --mask-x: 50%; --mask-y: 0%; --mask-size: 100% 150%;
+  -webkit-mask-position: var(--mask-x) var(--mask-y); mask-position: var(--mask-x) var(--mask-y);
+  -webkit-mask-size: var(--mask-size); mask-size: var(--mask-size);
+}
+/* blueprint reveals in (blueprint mask) */
+.jj-flight .blueprint {
+  -webkit-mask-image: url("/jet-blueprint-mask.webp"); mask-image: url("/jet-blueprint-mask.webp");
+  -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+  --mask-x: 50%; --mask-y: 200%; --mask-size: 100% 0%;
+  -webkit-mask-position: var(--mask-x) var(--mask-y); mask-position: var(--mask-x) var(--mask-y);
+  -webkit-mask-size: var(--mask-size); mask-size: var(--mask-size);
+}
+
+/* hide split-reveal targets until GSAP shows them */
+.jj-flight [data-reveal] { visibility: hidden; }
+
+/* ── mobile fallback ── */
+@media (max-width: 991px) {
+  .jj-flight { --h1-size: 16vw; --h2-size: 12vw; --p5-size: 4.5vw; --p7-size: 3.4vw; --l1-size: 3vw; --pad: 6vw; }
+  .jj-flight .title-desc { width: 70vw; }
+  .jj-flight .spec-row { flex-flow: column; }
+  .jj-flight .spec-s_center { flex: 0 0 30vh; }
+}

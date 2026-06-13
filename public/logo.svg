@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="300" height="220" viewBox="0 0 300 220">
+  <!-- 5 gold stars in arc -->
+  <text x="48"  y="42" font-size="22" fill="#C9973A" text-anchor="middle" font-family="Georgia,serif">★</text>
+  <text x="95"  y="24" font-size="22" fill="#C9973A" text-anchor="middle" font-family="Georgia,serif">★</text>
+  <text x="150" y="17" font-size="22" fill="#C9973A" text-anchor="middle" font-family="Georgia,serif">★</text>
+  <text x="205" y="24" font-size="22" fill="#C9973A" text-anchor="middle" font-family="Georgia,serif">★</text>
+  <text x="252" y="42" font-size="22" fill="#C9973A" text-anchor="middle" font-family="Georgia,serif">★</text>
+
+  <!-- Gold disc behind M -->
+  <circle cx="150" cy="118" r="58" fill="#C9973A"/>
+  <circle cx="150" cy="118" r="53" fill="#B8832A"/>
+  <circle cx="150" cy="118" r="49" fill="none" stroke="#D4A840" stroke-width="1" opacity="0.5"/>
+
+  <!-- L (navy, large serif) -->
+  <text x="10"  y="168" font-family="Georgia,serif" font-size="118" font-weight="700" fill="#0B1728">L</text>
+
+  <!-- M (navy on gold disc) -->
+  <text x="150" y="168" font-family="Georgia,serif" font-size="118" font-weight="700" fill="#0B1728" text-anchor="middle">M</text>
+
+  <!-- T (navy, large serif) -->
+  <text x="218" y="168" font-family="Georgia,serif" font-size="118" font-weight="700" fill="#0B1728">T</text>
+
+  <!-- Small private jet bottom-right, rotated -->
+  <g transform="translate(237,148) rotate(-25)">
+    <ellipse cx="0" cy="0" rx="22" ry="4" fill="#D0D5DC"/>
+    <ellipse cx="20" cy="0" rx="5" ry="2.5" fill="#B8BCC4"/>
+    <polygon points="-4,-2 12,-2 6,-12 -8,-12" fill="#C0C5CE"/>
+    <polygon points="-18,-2 -10,-2 -12,-8 -20,-8" fill="#C0C5CE"/>
+    <polygon points="-18,0 -16,0 -14,-7 -20,-6" fill="#B0B5BD"/>
+    <rect x="2" y="-2" width="10" height="2" rx="1" fill="#E8EBF0" opacity="0.8"/>
+    <ellipse cx="0" cy="7" rx="6" ry="2" fill="#B0B5BD"/>
+  </g>
+
+  <!-- Speed lines -->
+  <line x1="195" y1="158" x2="224" y2="158" stroke="#C8CDD5" stroke-width="1"   opacity="0.5"/>
+  <line x1="200" y1="163" x2="226" y2="163" stroke="#C8CDD5" stroke-width="0.8" opacity="0.35"/>
+  <line x1="208" y1="168" x2="228" y2="168" stroke="#C8CDD5" stroke-width="0.6" opacity="0.2"/>
+
+  <!-- PRIVATE JET subtitle -->
+  <text x="150" y="200" font-family="Inter,Arial,sans-serif" font-size="18" font-weight="500" fill="#0B1728" text-anchor="middle" letter-spacing="6">PRIVATE JET</text>
+</svg>
