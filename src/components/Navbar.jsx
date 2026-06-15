@@ -1,60 +1,12 @@
 import { useState, useEffect } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import { motion, AnimatePresence } from 'framer-motion'
+import { useNavigate } from 'react-router-dom'
 
 const navLinks = [
-  {
-    label: 'FLEET',
-    to: '/#fleet',
-    icon: (
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M21 16l-9-9-9 9"/>
-        <path d="M3 12l4-4 2 2 4-4 2 2 4-4"/>
-        <path d="M2 20h20"/>
-      </svg>
-    ),
-  },
-  {
-    label: 'WHY LMT',
-    to: '/#why-us',
-    icon: (
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
-        <circle cx="12" cy="8" r="4"/>
-        <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
-      </svg>
-    ),
-  },
-  {
-    label: 'SERVICES',
-    to: '/#services',
-    icon: (
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/>
-      </svg>
-    ),
-  },
-  {
-    label: 'BOOK A FLIGHT',
-    to: '/book',
-    icon: (
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="3" y="4" width="18" height="18" rx="2"/>
-        <line x1="16" y1="2" x2="16" y2="6"/>
-        <line x1="8" y1="2" x2="8" y2="6"/>
-        <line x1="3" y1="10" x2="21" y2="10"/>
-      </svg>
-    ),
-  },
-  {
-    label: 'CONTACT US',
-    to: '/#contact',
-    icon: (
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="2" y="4" width="20" height="16" rx="2"/>
-        <polyline points="2,4 12,13 22,4"/>
-      </svg>
-    ),
-  },
+  { label: 'FLEET', to: '/#fleet' },
+  { label: 'WHY LMT', to: '/#why-us' },
+  { label: 'SERVICES', to: '/#services' },
+  { label: 'BOOK A FLIGHT', to: '/book' },
+  { label: 'CONTACT US', to: '/#contact' },
 ]
 
 const socialLinks = [
@@ -98,55 +50,54 @@ export default function Navbar() {
 
   return (
     <>
-      {/* ── Top navbar ── */}
       <nav
-        className="fixed top-0 left-0 right-0 z-50 transition-all duration-400"
+        className="fixed top-0 left-0 right-0 z-50 transition-all duration-400 nav-bar"
         style={{
-          height: '84px',
-          background: scrolled ? 'rgba(255,255,255,0.96)' : 'rgba(255,255,255,0.80)',
-          backdropFilter: 'blur(10px)',
-          WebkitBackdropFilter: 'blur(10px)',
-          borderBottom: '1px solid rgba(0,0,0,0.06)',
-          boxShadow: scrolled ? '0 1px 24px rgba(0,0,0,0.07)' : 'none',
+          background: menuOpen
+            ? 'rgba(255,255,255,1)'
+            : scrolled ? 'rgba(255,255,255,0.55)' : 'rgba(255,255,255,1)',
+          backdropFilter: menuOpen ? 'none' : 'blur(10px)',
+          WebkitBackdropFilter: menuOpen ? 'none' : 'blur(10px)',
+          borderBottom: menuOpen ? 'none' : '1px solid rgba(0,0,0,0.06)',
+          boxShadow: !menuOpen && scrolled ? '0 1px 24px rgba(0,0,0,0.07)' : 'none',
         }}
       >
         <div
           className="flex items-center justify-between h-full"
           style={{ paddingLeft: '2vw', paddingRight: '2vw' }}
         >
-
-          {/* LEFT — menu icon */}
           <button
-            onClick={() => setMenuOpen(true)}
-            aria-label="Open menu"
-            className="flex items-center justify-center w-8 h-8 bg-transparent border-none cursor-pointer p-0 z-10 relative"
+            onClick={() => setMenuOpen(o => !o)}
+            aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+            className="flex items-center justify-center bg-transparent border-none cursor-pointer p-0 z-10 relative"
+            style={{ width: '32px', height: '32px' }}
           >
-            <img src="/menu.svg" alt="" style={{ width: '24px', height: 'auto', display: 'block' }} />
+            <div className="nav-burger" data-open={menuOpen}>
+              <span />
+              <span />
+              <span />
+            </div>
           </button>
 
-          {/* CENTER — LMT logo */}
           <button
             onClick={() => { setMenuOpen(false); navigate('/') }}
             className="absolute left-1/2 -translate-x-1/2 flex flex-col items-center cursor-pointer bg-transparent border-none p-0"
           >
             <img
-              src="/lmtlogo1.png"
+              src="/lmtlogo.svg"
               alt="LMT JETS"
-              style={{ height: '56px', width: 'auto', display: 'block' }}
+              className="nav-logo"
             />
           </button>
 
-          {/* RIGHT — Book A Jet (always visible) */}
           <button
             onClick={() => navigate('/book')}
-            className="z-10 relative flex items-center gap-2"
+            className="z-10 relative flex items-center gap-2 nav-book-btn"
             style={{
               fontFamily: 'Inter, sans-serif',
-              fontSize: '13px',
               letterSpacing: '0.5px',
               fontWeight: 500,
               borderRadius: '6px',
-              padding: '10px 24px',
               border: 'none',
               background: '#B8944F',
               color: '#FFFFFF',
@@ -162,7 +113,7 @@ export default function Navbar() {
               e.currentTarget.style.transform = 'translateY(0)'
             }}
           >
-            Book A Jet
+            <span className="nav-book-text">Book A Jet</span>
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
               <path d="M21 16l-9-9-9 9"/>
               <path d="M3 12l4-4 2 2 4-4 2 2 4-4"/>
@@ -171,150 +122,184 @@ export default function Navbar() {
         </div>
       </nav>
 
-      {/* ── Sidebar overlay ── */}
-      <AnimatePresence>
-        {menuOpen && (
-          <>
-            {/* Dark backdrop */}
-            <motion.div
-              key="backdrop"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.3 }}
-              className="fixed inset-0 z-[99]"
-              style={{ backgroundColor: 'rgba(8,21,45,0.55)' }}
-              onClick={() => setMenuOpen(false)}
-            />
+      <div
+        className="nav-overlay"
+        data-open={menuOpen}
+        onClick={(e) => { if (e.target === e.currentTarget) setMenuOpen(false) }}
+      >
+        <div className="nav-overlay-content">
+          <div className="nav-overlay-links">
+            {navLinks.map((link, i) => (
+              <button
+                key={link.label}
+                onClick={() => handleNavClick(link.to)}
+                className="nav-overlay-link"
+                style={{ transitionDelay: menuOpen ? `${0.08 + i * 0.06}s` : '0s' }}
+                data-open={menuOpen}
+              >
+                {link.label}
+              </button>
+            ))}
+          </div>
 
-            {/* LEFT sliding panel */}
-            <div
-              key="sidebar"
-              className="fixed top-0 left-0 bottom-0 z-[100] flex flex-col"
-              style={{
-                width: '300px',
-                backgroundColor: '#FFFFFF',
-                boxShadow: '6px 0 50px rgba(0,0,0,0.15)',
-                transform: 'translateX(0)',
-                animation: 'sidebarSlideIn 0.42s cubic-bezier(0.4,0,0.2,1) forwards',
-              }}
-            >
-              {/* Top: close button only */}
-              <div className="flex items-center justify-end px-6 py-5 border-b"
-                style={{ borderColor: 'rgba(0,0,0,0.07)' }}>
-                <button
-                  onClick={() => setMenuOpen(false)}
-                  className="flex items-center justify-center bg-transparent border-none cursor-pointer"
-                  style={{ color: 'rgba(0,0,0,0.35)', width: '32px', height: '32px', transition: 'color 0.2s' }}
-                  onMouseEnter={e => e.currentTarget.style.color = '#1C1C1C'}
-                  onMouseLeave={e => e.currentTarget.style.color = 'rgba(0,0,0,0.35)'}
-                >
-                  <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round">
-                    <line x1="1" y1="1" x2="17" y2="17" />
-                    <line x1="17" y1="1" x2="1" y2="17" />
-                  </svg>
-                </button>
-              </div>
+          <div className="nav-overlay-bottom" style={{ transitionDelay: menuOpen ? '0.5s' : '0s' }} data-open={menuOpen}>
+            <p style={{
+              fontFamily: 'Inter, sans-serif',
+              fontSize: '9px',
+              letterSpacing: '3px',
+              textTransform: 'uppercase',
+              color: '#B8944F',
+              marginBottom: '14px',
+              fontWeight: 500,
+            }}>
+              24/7 Concierge
+            </p>
 
-              {/* Nav links with icons */}
-              <nav className="flex flex-col px-6 pt-6 flex-1">
-                {navLinks.map((link, i) => (
-                  <button
-                    key={link.label}
-                    onClick={() => handleNavClick(link.to)}
-                    className="flex items-center w-full text-left bg-transparent border-none cursor-pointer rounded-lg transition-all duration-200"
-                    style={{ padding: '12px 10px', marginBottom: '2px', gap: '14px' }}
-                    onMouseEnter={e => { e.currentTarget.style.backgroundColor = 'rgba(184,148,79,0.07)' }}
-                    onMouseLeave={e => { e.currentTarget.style.backgroundColor = 'transparent' }}
-                  >
-                    {/* Icon — fixed 20px width */}
-                    <span style={{ color: '#B8944F', flexShrink: 0, width: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                      {link.icon}
-                    </span>
-                    {/* Label */}
-                    <span style={{
-                      fontFamily: 'Inter, sans-serif',
-                      fontSize: '11px',
-                      letterSpacing: '2px',
-                      textTransform: 'uppercase',
-                      fontWeight: 500,
-                      color: '#142544',
-                    }}>
-                      {link.label}
-                    </span>
-                  </button>
-                ))}
-              </nav>
+            {[
+              { href: 'tel:+18889292298', text: '+1 (888) 929-2298' },
+              { href: 'https://wa.me/16464200679', text: 'WA: +1 (646) 420-0679' },
+              { href: 'mailto:info@lmtjets.com', text: 'info@lmtjets.com' },
+              { href: null, text: '120 Gazza Blvd, Farmingdale, NY 11735' },
+            ].map(({ href, text }) => {
+              const s = {
+                fontFamily: 'Inter, sans-serif', fontSize: '12px',
+                color: 'rgba(0,0,0,0.45)', display: 'block', marginBottom: '6px',
+                textDecoration: 'none', lineHeight: 1.5, transition: 'color 0.2s',
+              }
+              return href ? (
+                <a key={text} href={href} style={s}
+                  onMouseEnter={e => e.currentTarget.style.color = '#B8944F'}
+                  onMouseLeave={e => e.currentTarget.style.color = 'rgba(0,0,0,0.45)'}>
+                  {text}
+                </a>
+              ) : (
+                <span key={text} style={s}>{text}</span>
+              )
+            })}
 
-              {/* Bottom: 24/7 contact + socials */}
-              <div className="flex-shrink-0"
-                style={{ padding: '20px 24px 24px', borderTop: '1px solid rgba(0,0,0,0.07)' }}>
-
-                {/* "24/7 CONCIERGE" heading */}
-                <p style={{
-                  fontFamily: 'Inter, sans-serif',
-                  fontSize: '9px',
-                  letterSpacing: '3px',
-                  textTransform: 'uppercase',
-                  color: '#B8944F',
-                  marginBottom: '12px',
-                  fontWeight: 500,
-                }}>
-                  24/7 Concierge
-                </p>
-
-                {/* Contact info */}
-                {[
-                  { href: 'tel:+18889292298',               text: '+1 (888) 929-2298' },
-                  { href: 'https://wa.me/16464200679',       text: 'WA: +1 (646) 420-0679' },
-                  { href: 'mailto:info@lmtjets.com',         text: 'info@lmtjets.com' },
-                  { href: null,                              text: '120 Gazza Blvd, Farmingdale, NY 11735' },
-                ].map(({ href, text }) => {
-                  const style = {
-                    fontFamily: 'Inter, sans-serif',
-                    fontSize: '11px',
-                    color: 'rgba(0,0,0,0.45)',
-                    display: 'block',
-                    marginBottom: '6px',
+            <div className="flex items-center gap-3 mt-5">
+              {socialLinks.map(({ label, href, icon }) => (
+                <a key={label} href={href} target="_blank" rel="noreferrer"
+                  aria-label={label}
+                  className="flex items-center justify-center rounded-full transition-all duration-200"
+                  style={{
+                    width: '32px', height: '32px',
+                    border: '1px solid rgba(0,0,0,0.10)',
+                    color: 'rgba(0,0,0,0.40)',
                     textDecoration: 'none',
-                    lineHeight: 1.5,
-                    transition: 'color 0.2s',
-                  }
-                  return href ? (
-                    <a key={text} href={href} style={style}
-                      onMouseEnter={e => e.currentTarget.style.color = '#B8944F'}
-                      onMouseLeave={e => e.currentTarget.style.color = 'rgba(0,0,0,0.45)'}>
-                      {text}
-                    </a>
-                  ) : (
-                    <span key={text} style={style}>{text}</span>
-                  )
-                })}
-
-                {/* Social icons */}
-                <div className="flex items-center gap-3 mt-4">
-                  {socialLinks.map(({ label, href, icon }) => (
-                    <a key={label} href={href} target="_blank" rel="noreferrer"
-                      aria-label={label}
-                      className="flex items-center justify-center rounded-full transition-all duration-200"
-                      style={{
-                        width: '30px', height: '30px',
-                        border: '1px solid rgba(0,0,0,0.10)',
-                        color: 'rgba(0,0,0,0.40)',
-                        textDecoration: 'none',
-                      }}
-                      onMouseEnter={e => { e.currentTarget.style.borderColor = '#B8944F'; e.currentTarget.style.color = '#B8944F' }}
-                      onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(0,0,0,0.10)'; e.currentTarget.style.color = 'rgba(0,0,0,0.40)' }}
-                    >
-                      {icon}
-                    </a>
-                  ))}
-                </div>
-              </div>
+                  }}
+                  onMouseEnter={e => { e.currentTarget.style.borderColor = '#B8944F'; e.currentTarget.style.color = '#B8944F' }}
+                  onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(0,0,0,0.10)'; e.currentTarget.style.color = 'rgba(0,0,0,0.40)' }}
+                >
+                  {icon}
+                </a>
+              ))}
             </div>
-          </>
-        )}
-      </AnimatePresence>
+          </div>
+        </div>
+      </div>
+
+      <style>{`
+        .nav-bar { height: 84px; }
+        .nav-logo { height: 74px; width: auto; display: block; }
+        .nav-book-btn { font-size: 13px; padding: 10px 24px; }
+        .nav-book-text { }
+
+        .nav-burger {
+          width: 22px; height: 16px;
+          position: relative; display: flex; flex-direction: column;
+          justify-content: space-between;
+        }
+        .nav-burger span {
+          display: block; width: 100%; height: 2px;
+          background: #142544; border-radius: 2px;
+          transition: transform 0.35s cubic-bezier(0.77,0,0.18,1),
+                      opacity 0.25s ease;
+          transform-origin: center;
+        }
+        .nav-burger[data-open="true"] span:nth-child(1) {
+          transform: translateY(7px) rotate(45deg);
+        }
+        .nav-burger[data-open="true"] span:nth-child(2) {
+          opacity: 0;
+        }
+        .nav-burger[data-open="true"] span:nth-child(3) {
+          transform: translateY(-7px) rotate(-45deg);
+        }
+
+        .nav-overlay {
+          position: fixed; inset: 0; z-index: 49;
+          background: rgba(255,255,255,0.97);
+          backdrop-filter: blur(24px);
+          -webkit-backdrop-filter: blur(24px);
+          opacity: 0;
+          visibility: hidden;
+          transition: opacity 0.4s cubic-bezier(0.4,0,0.2,1),
+                      visibility 0s 0.4s;
+          padding-top: 84px;
+        }
+        .nav-overlay[data-open="true"] {
+          opacity: 1;
+          visibility: visible;
+          transition: opacity 0.4s cubic-bezier(0.4,0,0.2,1),
+                      visibility 0s 0s;
+        }
+
+        .nav-overlay-content {
+          height: 100%; display: flex; flex-direction: column;
+          justify-content: center; padding: 0 8vw;
+        }
+
+        .nav-overlay-links {
+          display: flex; flex-direction: column; gap: 6px;
+        }
+
+        .nav-overlay-link {
+          font-family: Arial, sans-serif;
+          font-size: clamp(28px, 4vw, 48px);
+          font-weight: 400;
+          color: #142544;
+          text-transform: uppercase;
+          letter-spacing: 2px;
+          background: none; border: none; cursor: pointer;
+          text-align: left; padding: 10px 0;
+          opacity: 0;
+          transform: translateY(40px);
+          transition: opacity 0.45s cubic-bezier(0.4,0,0.2,1),
+                      transform 0.45s cubic-bezier(0.4,0,0.2,1),
+                      color 0.2s ease;
+        }
+        .nav-overlay-link[data-open="true"] {
+          opacity: 1;
+          transform: translateY(0);
+        }
+        .nav-overlay-link:hover {
+          color: #B8944F;
+        }
+
+        .nav-overlay-bottom {
+          margin-top: 48px;
+          opacity: 0;
+          transform: translateY(20px);
+          transition: opacity 0.4s cubic-bezier(0.4,0,0.2,1),
+                      transform 0.4s cubic-bezier(0.4,0,0.2,1);
+        }
+        .nav-overlay-bottom[data-open="true"] {
+          opacity: 1;
+          transform: translateY(0);
+        }
+
+        @media (max-width: 640px) {
+          .nav-bar { height: 64px; }
+          .nav-logo { height: 50px; }
+          .nav-book-btn { font-size: 11px; padding: 8px 14px; }
+          .nav-book-text { display: none; }
+          .nav-overlay { padding-top: 64px; }
+          .nav-overlay-content { padding: 0 6vw; justify-content: flex-start; padding-top: 10vh; }
+          .nav-overlay-link { font-size: 24px; letter-spacing: 1px; padding: 8px 0; }
+          .nav-overlay-bottom { margin-top: 32px; }
+        }
+      `}</style>
     </>
   )
 }

@@ -205,8 +205,6 @@ export default function FlyInLuxurySection() {
         <div className="jet-switcher">
 
           {/* backdrop */}
-          <div className="jet-sky" />
-          <div className="jet-clouds" />
           <div className="light-bg" />
 
           {/* ── TITLE VIEW ── */}

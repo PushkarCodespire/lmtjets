@@ -75,7 +75,7 @@ export default function DestinationsSection() {
             <img className="g8-barcode" src="/ticket-barcode.png" alt="" />
           </div>
           <div className="g8-arranged">Successfully arranged</div>
-          <img className="g8-logo" src="/lmtlogo1.png" alt="LMT" />
+          <img className="g8-logo" src="/lmtlogo.svg" alt="LMT" />
           <p className="g8-desc">
             The longest-range business jet ever certified. Transpacific, nonstop,
             at the quietest cabin altitude in the category.
@@ -127,7 +127,7 @@ export default function DestinationsSection() {
           font-family: Arial, sans-serif; font-weight: 700; font-size: 13px;
           letter-spacing: 1px; text-transform: uppercase; color: #312726; margin-top: 40px;
         }
-        .g8-logo { height: 46px; width: auto; margin-top: 36px; }
+        .g8-logo { height: 64px; width: auto; margin-top: 36px; }
         .g8-desc {
           font-family: Arial, sans-serif; font-size: 15px; color: #312726;
           line-height: 1.4; max-width: 270px; margin-top: 16px;
@@ -144,9 +144,20 @@ export default function DestinationsSection() {
         @media (max-width: 900px) {
           .dest-row { gap: 3vw; }
           .dest-viewport { width: 8em; }
-          .dest-globe { min-height: auto; display: flex; flex-direction: column; align-items: center; }
-          .dest-globe-img { width: 90vw; }
+          .dest-globe { min-height: auto; display: flex; flex-direction: column; align-items: center; height: auto !important; }
+          .dest-globe-img { position: relative !important; left: auto !important; top: auto !important; transform: none !important; width: 90vw; }
           .g8-card { position: static; width: 100%; max-width: 420px; margin-top: -40px; }
+        }
+        @media (max-width: 640px) {
+          .dest { padding: 40px 5vw 60px !important; }
+          .dest-row { flex-wrap: wrap; justify-content: center; }
+          .dest-label { font-size: clamp(16px, 4.5vw, 22px) !important; }
+          .dest-item { font-size: clamp(16px, 4.5vw, 22px) !important; }
+          .dest-line { width: clamp(24px, 5vw, 48px) !important; }
+          .dest-globe-img { width: 95vw; }
+          .g8-card { padding: 24px 20px 24px !important; margin-top: -20px; }
+          .g8-big { font-size: clamp(40px, 12vw, 60px) !important; }
+          .g8-global { font-size: clamp(18px, 5vw, 28px) !important; }
         }
       `}</style>
     </section>

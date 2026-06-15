@@ -1,18 +1,23 @@
 /* TestimonialsSection — stacked boarding-pass tickets (Figma 142:5431).
-   The top ticket flies away (up + fade), revealing the tilted ticket behind it,
-   which straightens into the front. The removed ticket settles back invisibly at
-   the rear of the stack and fades in. All tickets use the Ankit Vij portrait. */
+   Every ticket renders full content; a grey "veil" fades it to grey when it's
+   behind and to navy when it's the front, so cards crossfade instead of hard-
+   swapping. The front ticket lifts + fades out, the next un-greys into place,
+   and the leaving ticket fades back in at the rear — all simultaneously. */
 
 import { useState, useEffect, useRef } from 'react'
 
-const NAVY = '#16294a'
+const NAVY = '#1c2c4a'
+const GREY = '#8f8b84'
 const GOLD = '#D2A567'
 const CREAM = '#FFF8ED'
 const PHOTO = '/amkitimage.png'
 
-const ROT = [0, 6, -6, 9, -9]      // fan rotation per depth
-const TY = [0, 9, 18, 27, 36]      // px down per depth
-const SC = [1, 0.955, 0.91, 0.865] // scale per depth
+const ROT = [0, 2.6, -2.6, 4]
+const TX = [0, 18, -18, 28]
+const TY = [0, 13, 21, 30]
+const SC = [1, 0.968, 0.936, 0.9]
+
+const EASE = 'cubic-bezier(0.33, 0, 0.2, 1)'
 
 const testimonials = [
   { name: 'Ankit Vij', location: 'New York, NY', quote: 'Three continents in five days, all coordinated by my LMT concierge. They handled every detail flawlessly. I never want to fly any other way.' },
@@ -21,9 +26,9 @@ const testimonials = [
   { name: 'Sofia Marchetti', location: 'London, UK', quote: 'When my flight was diverted by weather, LMT rebooked me on a new aircraft within the hour. Their crisis response is second to none.' },
 ]
 
-const depth = (pos) => `rotate(${ROT[pos] ?? 0}deg) translateY(${TY[pos] ?? 40}px) scale(${SC[pos] ?? 0.82})`
+const depth = (pos) => `translate(${TX[pos] ?? 36}px, ${TY[pos] ?? 38}px) rotate(${ROT[pos] ?? 5}deg) scale(${SC[pos] ?? 0.86})`
 
-function Ticket({ data }) {
+function Ticket({ data, veil }) {
   return (
     <div className="tk">
       <div className="tk-left">
@@ -31,10 +36,7 @@ function Ticket({ data }) {
         <div className="tk-name">{data.name}</div>
         <div className="tk-loc">{data.location}</div>
       </div>
-      <div className="tk-perf">
-        <span className="tk-notch tk-notch-top" />
-        <span className="tk-notch tk-notch-bot" />
-      </div>
+      <div className="tk-perf" />
       <div className="tk-right">
         <div className="tk-content">
           <div className="tk-stars">★ ★ ★ ★ ★</div>
@@ -42,14 +44,15 @@ function Ticket({ data }) {
         </div>
         <img className="tk-barcode" src="/ticket-barcode.png" alt="" />
       </div>
+      <div className="tk-veil" style={{ opacity: veil }} />
     </div>
   )
 }
 
 export default function TestimonialsSection() {
   const [order, setOrder] = useState(testimonials.map((_, i) => i))
-  const [exiting, setExiting] = useState(null)  // id flying away
-  const [landed, setLanded] = useState(null)    // id snapping to the rear (no transition)
+  const [exiting, setExiting] = useState(null)
+  const [landed, setLanded] = useState(null)
   const orderRef = useRef(order)
   useEffect(() => { orderRef.current = order }, [order])
 
@@ -60,36 +63,38 @@ export default function TestimonialsSection() {
     setOrder([...orderRef.current.slice(1), front])
     setTimeout(() => {
       setExiting(null)
-      setLanded(front)                       // place at rear with no transition + invisible
-      setTimeout(() => setLanded(null), 60)  // then let it fade in
-    }, 520)
+      setLanded(front)
+      setTimeout(() => setLanded(null), 50)
+    }, 620)
   }
 
   useEffect(() => {
-    const t = setInterval(advance, 4500)
+    const t = setInterval(advance, 5000)
     return () => clearInterval(t)
   }, [])
 
   return (
-    <section style={{ background: CREAM, padding: '96px 5vw 120px' }}>
+    <section style={{ background: CREAM, padding: '110px 5vw 130px' }}>
       <div className="tk-stack">
         {order.map((id, pos) => {
-          let style
+          let style, veil
           if (id === exiting) {
-            style = { zIndex: 40, animation: 'tkExit 0.52s cubic-bezier(0.4,0,0.2,1) forwards' }
+            style = { zIndex: 40, animation: `tkExit 0.62s ${EASE} forwards` }
+            veil = 0 // leaves as navy
           } else if (id === landed) {
             style = { zIndex: 30 - pos, transform: depth(pos), transition: 'none', opacity: 0 }
+            veil = 1 // returns greyed
           } else {
             style = {
-              zIndex: 30 - pos, transform: depth(pos),
-              transition: 'transform 0.55s cubic-bezier(0.4,0,0.2,1), opacity 0.5s',
-              opacity: pos > 3 ? 0 : 1,
+              zIndex: 30 - pos, transform: depth(pos), opacity: 1,
+              transition: `transform 0.62s ${EASE}, opacity 0.55s ${EASE}`,
             }
+            veil = pos === 0 ? 0 : 1
           }
           return (
             <div key={id} className="tk-slot" style={style}
               onClick={pos === 0 && exiting === null ? advance : undefined}>
-              <Ticket data={testimonials[id]} />
+              <Ticket data={testimonials[id]} veil={veil} />
             </div>
           )
         })}
@@ -97,22 +102,35 @@ export default function TestimonialsSection() {
 
       <style>{`
         .tk-stack { position: relative; max-width: 1080px; margin: 0 auto; aspect-ratio: 1292 / 400; }
-        .tk-slot { position: absolute; inset: 0; transform-origin: center 60%; will-change: transform, opacity; }
+        .tk-slot { position: absolute; inset: 0; transform-origin: center 62%; will-change: transform, opacity; }
         .tk-slot:first-child { cursor: pointer; }
 
         @keyframes tkExit {
-          0%   { transform: rotate(0deg) translateY(0) scale(1); opacity: 1; }
-          100% { transform: rotate(-7deg) translateY(-72%) scale(1.05); opacity: 0; }
+          0%   { transform: translate(0,0) rotate(0deg) scale(1); opacity: 1; }
+          100% { transform: translate(0,-55%) rotate(-5deg) scale(1.02); opacity: 0; }
         }
 
         .tk {
-          width: 100%; height: 100%; display: flex; background: ${NAVY};
-          border-radius: 14px; overflow: hidden;
-          box-shadow: 0 34px 64px rgba(20,37,68,0.30);
+          position: relative; width: 100%; height: 100%; display: flex; background: ${NAVY};
+          --zig: 18px; --zigw: 11px;
+          -webkit-mask:
+            linear-gradient(#000 0 0) 0 0 / calc(100% - var(--zigw)) 100% no-repeat,
+            conic-gradient(from -45deg at right, #0000 25%, #000 0) 100% 0 / var(--zigw) var(--zig);
+          mask:
+            linear-gradient(#000 0 0) 0 0 / calc(100% - var(--zigw)) 100% no-repeat,
+            conic-gradient(from -45deg at right, #0000 25%, #000 0) 100% 0 / var(--zigw) var(--zig);
+          border-radius: 14px;
+          transform: translateZ(0); backface-visibility: hidden;
         }
+        /* grey veil that fades between back (grey) and front (navy) */
+        .tk-veil {
+          position: absolute; inset: 0; background: ${GREY}; z-index: 5;
+          pointer-events: none; transition: opacity 0.55s ${EASE};
+        }
+
         .tk-left {
           flex: 0 0 30%; display: flex; flex-direction: column;
-          align-items: center; justify-content: center; padding: 5% 5%; text-align: center;
+          align-items: center; justify-content: center; padding: 5%; text-align: center;
         }
         .tk-photo {
           width: 52%; aspect-ratio: 176 / 211; border: 1.5px solid rgba(255,255,255,0.9);
@@ -122,24 +140,30 @@ export default function TestimonialsSection() {
         .tk-name { font-family: Arial, sans-serif; color: #fff; font-size: clamp(15px, 2vw, 27px); line-height: 1.15; }
         .tk-loc { font-family: Inter, sans-serif; color: rgba(255,255,255,0.6); font-size: clamp(11px, 1.15vw, 16px); margin-top: 7px; }
 
-        .tk-perf { position: relative; width: 0; border-left: 2px dashed rgba(255,255,255,0.22); }
-        .tk-notch { position: absolute; left: -11px; width: 22px; height: 22px; border-radius: 999px; background: ${CREAM}; }
-        .tk-notch-top { top: -11px; }
-        .tk-notch-bot { bottom: -11px; }
+        .tk-perf { position: relative; width: 0; border-left: 2px dotted rgba(255,255,255,0.4); }
+        .tk-perf::before, .tk-perf::after {
+          content: ''; position: absolute; left: -11px; width: 22px; height: 22px;
+          border-radius: 999px; background: ${CREAM};
+        }
+        .tk-perf::before { top: -11px; }
+        .tk-perf::after { bottom: -11px; }
 
-        .tk-right { flex: 1; display: flex; min-width: 0; }
+        .tk-right { flex: 1; display: flex; min-width: 0; padding-right: 1.5%; }
         .tk-content { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 5% 3% 5% 6%; min-width: 0; }
         .tk-stars { color: ${GOLD}; font-size: clamp(12px, 1.2vw, 15px); letter-spacing: 3px; margin-bottom: 5%; }
         .tk-quote { font-family: Arial, sans-serif; color: #fff; font-size: clamp(13px, 2vw, 30px); line-height: 1.4; margin: 0; }
-        .tk-barcode { height: 100%; width: clamp(56px, 9%, 118px); object-fit: cover; flex-shrink: 0; }
+        .tk-barcode { height: 84%; align-self: center; width: clamp(56px, 9%, 116px); object-fit: contain; flex-shrink: 0; }
 
         @media (max-width: 760px) {
-          .tk-stack { aspect-ratio: 1000 / 580; }
+          .tk-stack { aspect-ratio: auto; min-height: 380px; height: 48vh; }
           .tk { flex-direction: column; }
-          .tk-left { flex: 0 0 auto; padding: 20px; }
-          .tk-photo { width: 96px; }
+          .tk-left { flex: 0 0 auto; padding: 16px 20px; flex-direction: row; gap: 14px; }
+          .tk-photo { width: 56px; margin-bottom: 0; }
           .tk-perf, .tk-barcode { display: none; }
-          .tk-content { padding: 20px; }
+          .tk-content { padding: 16px 20px; }
+          .tk-quote { font-size: clamp(13px, 3.8vw, 18px) !important; }
+          .tk-name { font-size: clamp(13px, 3.5vw, 18px) !important; }
+          .tk-loc { font-size: clamp(10px, 2.5vw, 13px) !important; margin-top: 3px !important; }
         }
       `}</style>
     </section>

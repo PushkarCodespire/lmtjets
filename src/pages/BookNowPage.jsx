@@ -43,7 +43,7 @@ export default function BookNowPage() {
   }
 
   return (
-    <div style={{ backgroundColor: navy, minHeight: '100vh' }}>
+    <div style={{ backgroundColor: '#FFF8ED', minHeight: '100vh' }}>
 
       {/* ═══════════ HERO ═══════════ */}
       <section style={{ position: 'relative', minHeight: '600px', overflow: 'hidden' }}>
@@ -163,7 +163,7 @@ export default function BookNowPage() {
       </section>
 
       {/* ═══════════ RESULTS ═══════════ */}
-      <section id="results" style={{ backgroundColor: navy, padding: '64px 48px', maxWidth: '1400px', margin: '0 auto' }}>
+      <section id="results" style={{ backgroundColor: '#FFF8ED', padding: '64px 48px', maxWidth: '1400px', margin: '0 auto' }}>
 
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '36px', flexWrap: 'wrap', gap: '16px' }}>
           <div>
@@ -177,27 +177,27 @@ export default function BookNowPage() {
             <h2 style={{
               fontFamily: "'Cormorant Garamond', Georgia, serif",
               fontSize: 'clamp(28px, 3vw, 38px)',
-              fontWeight: 500, color: '#FFFFFF', marginBottom: '12px',
+              fontWeight: 500, color: navy, marginBottom: '12px',
             }}>
               We found {results.length} available aircraft
             </h2>
             {/* Filter summary */}
-            <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap', fontFamily: 'Inter, sans-serif', fontSize: '12px', color: 'rgba(255,255,255,0.55)' }}>
-              <FilterChip icon={<PaxIcon size={12} />}>From <strong style={{ color: '#FFFFFF' }}>{from || 'New York, NY'}</strong></FilterChip>
-              <FilterChip icon={<PinIcon size={12} />}>To <strong style={{ color: '#FFFFFF' }}>{to || 'Miami, FL'}</strong></FilterChip>
-              <FilterChip icon={<CalIcon size={12} />}>On <strong style={{ color: '#FFFFFF' }}>{date || 'dd-mm-yyyy'}</strong></FilterChip>
-              <FilterChip icon={<PaxIcon size={12} />}><strong style={{ color: '#FFFFFF' }}>{pax} Passenger{pax > 1 ? 's' : ''}</strong></FilterChip>
+            <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap', fontFamily: 'Inter, sans-serif', fontSize: '12px', color: 'rgba(20,37,68,0.55)' }}>
+              <FilterChip icon={<PaxIcon size={12} />}>From <strong style={{ color: navy }}>{from || 'New York, NY'}</strong></FilterChip>
+              <FilterChip icon={<PinIcon size={12} />}>To <strong style={{ color: navy }}>{to || 'Miami, FL'}</strong></FilterChip>
+              <FilterChip icon={<CalIcon size={12} />}>On <strong style={{ color: navy }}>{date || 'dd-mm-yyyy'}</strong></FilterChip>
+              <FilterChip icon={<PaxIcon size={12} />}><strong style={{ color: navy }}>{pax} Passenger{pax > 1 ? 's' : ''}</strong></FilterChip>
             </div>
           </div>
 
           {/* Sort dropdown */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <span style={{ fontFamily: 'Inter, sans-serif', fontSize: '11px', color: 'rgba(255,255,255,0.55)', letterSpacing: '1px' }}>Sort by</span>
+            <span style={{ fontFamily: 'Inter, sans-serif', fontSize: '11px', color: 'rgba(20,37,68,0.55)', letterSpacing: '1px' }}>Sort by</span>
             <select value={sortBy} onChange={e => setSortBy(e.target.value)}
               style={{
-                background: 'rgba(255,255,255,0.05)',
-                border: '1px solid rgba(255,255,255,0.18)',
-                color: '#FFFFFF',
+                background: 'rgba(20,37,68,0.04)',
+                border: '1px solid rgba(20,37,68,0.18)',
+                color: navy,
                 padding: '8px 28px 8px 14px',
                 fontFamily: 'Inter, sans-serif', fontSize: '12px',
                 borderRadius: '4px', cursor: 'pointer', outline: 'none',
@@ -206,17 +206,17 @@ export default function BookNowPage() {
                 backgroundRepeat: 'no-repeat',
                 backgroundPosition: 'right 10px center',
               }}>
-              <option style={{ background: navy }}>Recommended</option>
-              <option style={{ background: navy }}>Price (Low)</option>
-              <option style={{ background: navy }}>Price (High)</option>
-              <option style={{ background: navy }}>Range</option>
+              <option style={{ background: '#FFF8ED' }}>Recommended</option>
+              <option style={{ background: '#FFF8ED' }}>Price (Low)</option>
+              <option style={{ background: '#FFF8ED' }}>Price (High)</option>
+              <option style={{ background: '#FFF8ED' }}>Range</option>
             </select>
           </div>
         </div>
 
         {/* Aircraft cards */}
         {results.length === 0 ? (
-          <div style={{ textAlign: 'center', padding: '80px 0', color: 'rgba(255,255,255,0.50)' }}>
+          <div style={{ textAlign: 'center', padding: '80px 0', color: 'rgba(20,37,68,0.50)' }}>
             <p style={{ fontFamily: 'Inter', fontSize: '14px' }}>No aircraft match your passenger count. Try fewer passengers.</p>
           </div>
         ) : (
@@ -231,7 +231,7 @@ export default function BookNowPage() {
         <p style={{
           textAlign: 'center', marginTop: '40px',
           fontFamily: 'Inter, sans-serif', fontSize: '11px',
-          color: 'rgba(255,255,255,0.40)', fontStyle: 'italic',
+          color: 'rgba(20,37,68,0.40)', fontStyle: 'italic',
         }}>
           *Pricing is an estimate and may vary based on availability, routing, and aircraft positioning.
         </p>
@@ -292,9 +292,10 @@ function AircraftCard({ aircraft, onClick }) {
       borderRadius: '6px', overflow: 'hidden',
       display: 'grid', gridTemplateColumns: '300px 1fr 240px',
       transition: 'all 0.3s',
+      boxShadow: '0 2px 12px rgba(20,37,68,0.08)',
     }} className="ac-card"
-      onMouseEnter={e => e.currentTarget.style.boxShadow = '0 8px 28px rgba(0,0,0,0.20)'}
-      onMouseLeave={e => e.currentTarget.style.boxShadow = 'none'}>
+      onMouseEnter={e => e.currentTarget.style.boxShadow = '0 8px 28px rgba(20,37,68,0.14)'}
+      onMouseLeave={e => e.currentTarget.style.boxShadow = '0 2px 12px rgba(20,37,68,0.08)'}>
 
       {/* IMAGE */}
       <div style={{ overflow: 'hidden', aspectRatio: '4/3' }} className="ac-img">
@@ -413,7 +414,7 @@ function SpecItem({ icon, value, label }) {
 
 function FilterChip({ icon, children }) {
   return (
-    <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', color: 'rgba(255,255,255,0.55)' }}>
+    <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', color: 'rgba(20,37,68,0.55)' }}>
       <span style={{ color: gold }}>{icon}</span>
       {children}
     </span>

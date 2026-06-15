@@ -186,6 +186,10 @@ export default function ServicesSection() {
           .services-grid { grid-template-columns: 1fr !important; }
           .services-inner-grid { grid-template-columns: 1fr !important; }
         }
+        @media (max-width: 640px) {
+          #services { padding: 64px 5vw !important; }
+          .services-grid { gap: 36px !important; }
+        }
       `}</style>
     </section>
   )

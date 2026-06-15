@@ -133,6 +133,12 @@ export default function WhyUsSection() {
         @media (max-width: 900px) {
           .why-grid { grid-template-columns: 1fr !important; gap: 48px !important; }
         }
+        @media (max-width: 640px) {
+          #why-us { padding-top: 72px !important; }
+          #why-us .why-grid { padding: 0 5vw !important; }
+          #why-us h2 { font-size: clamp(26px, 7vw, 36px) !important; }
+          #why-us + div, #why-us > div:last-of-type { height: 60px !important; }
+        }
       `}</style>
     </section>
   )

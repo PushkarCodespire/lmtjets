@@ -38,6 +38,7 @@
   background: #FFF8ED;
   font-weight: 500;
   line-height: 1;
+  margin-top: -1px;
 }
 
 /* ── typography ── */
@@ -57,22 +58,6 @@
   overflow: hidden;
   background: linear-gradient(180deg, #8fb8cf 0%, #b6d0de 28%, #dde6e2 58%, #FFF8ED 100%);
 }
-
-/* sky + drifting clouds */
-.jj-flight .jet-sky {
-  position: absolute; inset: 0; z-index: 0;
-  background: url("/sky-about.avif") center top / cover no-repeat;
-  opacity: 0.85;
-}
-.jj-flight .jet-clouds {
-  position: absolute; top: 0; left: 0; right: 0; height: 70%; z-index: 0;
-  background: url("/clouds.webp") repeat-x left top;
-  background-size: auto 100%;
-  opacity: 0.7;
-  animation: jj-marquee 60s linear infinite;
-  pointer-events: none;
-}
-@keyframes jj-marquee { from { background-position-x: 0; } to { background-position-x: -2000px; } }
 
 /* cream background that fades in over the sky */
 .jj-flight .light-bg {
@@ -165,4 +150,15 @@
   .jj-flight .title-desc { width: 70vw; }
   .jj-flight .spec-row { flex-flow: column; }
   .jj-flight .spec-s_center { flex: 0 0 30vh; }
+}
+@media (max-width: 640px) {
+  .jj-flight { --h1-size: 13vw; --h2-size: 10vw; --p5-size: 5vw; --p7-size: 3.6vw; --l1-size: 2.8vw; --pad: 5vw; }
+  .jj-flight .title-row { top: 38%; flex-direction: column; gap: 0; }
+  .jj-flight .title-sub { top: 56%; }
+  .jj-flight .title-desc { bottom: 4%; width: 85vw; }
+  .jj-flight .spec-s { padding: 20vw var(--pad) 3vw; }
+  .jj-flight .spec-s_center { flex: 0 0 20vh; }
+  .jj-flight .spec-grid { grid-template-columns: 1fr; row-gap: 3vw; }
+  .jj-flight .spec-arrows button { width: 10vw; height: 10vw; }
+  .jj-flight .jet-imgs { height: 100vh; }
 }

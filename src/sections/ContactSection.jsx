@@ -140,6 +140,11 @@ export default function ContactSection() {
         @media (max-width: 900px) {
           .contact-grid { grid-template-columns: 1fr !important; gap: 48px !important; }
         }
+        @media (max-width: 640px) {
+          #contact { padding: 64px 5vw 72px !important; }
+          .contact-row { flex-direction: column !important; align-items: flex-start !important; gap: 12px !important; padding: 20px 0 !important; }
+          .contact-row .contact-action { padding-left: 80px; }
+        }
       `}</style>
     </section>
   )

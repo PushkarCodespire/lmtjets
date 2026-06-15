@@ -22,7 +22,7 @@ const out = (e) => { e.currentTarget.style.color = 'rgba(28,35,48,0.78)' }
 
 export default function Footer() {
   return (
-    <footer style={{ position: 'relative', overflow: 'hidden', background: '#FFF8ED', color: INK }}>
+    <footer className="site-footer" style={{ position: 'relative', overflow: 'hidden', background: '#FFF8ED', color: INK }}>
       {/* ── background layers ── */}
       <div style={{
         position: 'absolute', inset: 0, zIndex: 0,
@@ -42,7 +42,7 @@ export default function Footer() {
 
             {/* COL 1 — Logo + tagline + social */}
             <div>
-              <img src="/lmtlogo1.png" alt="LMT JETS" style={{ height: '52px', marginBottom: '16px' }} />
+              <img src="/lmtlogo.svg" alt="LMT JETS" style={{ height: '72px', marginBottom: '16px' }} />
               <p style={{ fontFamily: 'Inter, sans-serif', fontSize: '14px', color: 'rgba(28,35,48,0.7)', lineHeight: 1.6, maxWidth: '230px', marginBottom: '24px' }}>
                 Private aviation designed around your schedule, your standards, and your destinations.
               </p>
@@ -126,6 +126,12 @@ export default function Footer() {
           </div>
         </div>
       </div>
+      <style>{`
+        @media (max-width: 640px) {
+          .site-footer .grid { gap: 36px !important; }
+          .site-footer > div > div:first-child { padding: 48px 5vw 36px !important; }
+        }
+      `}</style>
     </footer>
   )
 }
