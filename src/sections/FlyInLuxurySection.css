@@ -146,19 +146,46 @@
 
 /* ── mobile fallback ── */
 @media (max-width: 991px) {
-  .jj-flight { --h1-size: 16vw; --h2-size: 12vw; --p5-size: 4.5vw; --p7-size: 3.4vw; --l1-size: 3vw; --pad: 6vw; }
+  .jj-flight { --h1-size: 16vw; --h2-size: 12vw; --p5-size: 4.5vw; --p7-size: 14px; --l1-size: 11px; --pad: 6vw; }
   .jj-flight .title-desc { width: 70vw; }
-  .jj-flight .spec-row { flex-flow: column; }
-  .jj-flight .spec-s_center { flex: 0 0 30vh; }
+  .jj-flight .spec-s_center { display: none; }
+  .jj-flight .spec-row { flex-flow: column; gap: 3vw; }
+  .jj-flight .jet-imgs { height: 130vh; top: 65%; }
+  .jj-flight .spec-s { padding: 5vw var(--pad) 0; }
+  .jj-flight .spec-s_left, .jj-flight .spec-s_right { flex: none; }
 }
 @media (max-width: 640px) {
-  .jj-flight { --h1-size: 13vw; --h2-size: 10vw; --p5-size: 5vw; --p7-size: 3.6vw; --l1-size: 2.8vw; --pad: 5vw; }
-  .jj-flight .title-row { top: 38%; flex-direction: column; gap: 0; }
-  .jj-flight .title-sub { top: 56%; }
-  .jj-flight .title-desc { bottom: 4%; width: 85vw; }
-  .jj-flight .spec-s { padding: 20vw var(--pad) 3vw; }
-  .jj-flight .spec-s_center { flex: 0 0 20vh; }
-  .jj-flight .spec-grid { grid-template-columns: 1fr; row-gap: 3vw; }
-  .jj-flight .spec-arrows button { width: 10vw; height: 10vw; }
-  .jj-flight .jet-imgs { height: 100vh; }
+  .jj-flight { --h1-size: 13vw; --h2-size: 10vw; --p5-size: 5vw; --p7-size: 13px; --l1-size: 10px; --pad: 5vw; }
+
+  /* Title view — compact text at top, matching spec view spacing */
+  .jj-flight .title-row { top: 72px; flex-direction: column; gap: 0; }
+  .jj-flight .title-sub { top: 200px; }
+  .jj-flight .title-desc { bottom: auto; top: 290px; width: 85vw; left: var(--pad); }
+
+  /* Jet — lower half, slightly smaller */
+  .jj-flight .jet-imgs { height: 100vh; top: 66%; }
+
+  /* Spec view — compact into upper half, kill all vw gaps */
+  .jj-flight .spec-s { padding: 72px var(--pad) 0; height: auto; min-height: 0; }
+  .jj-flight .spec-s_center { display: none; }
+  .jj-flight .spec-row { flex: none; gap: 10px; padding-top: 6px; }
+  .jj-flight .spec-s_left, .jj-flight .spec-s_right { flex: none; }
+
+  /* Override inline vw margins to fixed px */
+  .jj-flight .spec-s_left_top .h2 { margin-top: 4px !important; }
+  .jj-flight .spec-grid { grid-template-columns: 1fr 1fr; row-gap: 8px; column-gap: 12px; margin-top: 6px !important; }
+  .jj-flight .l1-item { gap: 2px; }
+  .jj-flight .spec-block + .spec-block { margin-top: 8px; }
+  .jj-flight .spec-pair { padding: 1px 0; }
+  .jj-flight .spec-s_right_top .p5 { margin-top: 6px !important; }
+  .jj-flight .spec-s_right_top [style*="2.4vw"] { height: 8px !important; }
+  .jj-flight .spec-s_right_top .l1 { margin: 6px 0 4px !important; }
+  .jj-flight .spec-arrows { gap: 8px; }
+  .jj-flight .spec-arrows button { width: 36px; height: 36px; }
+  .jj-flight .spec-switcher { gap: 8px; margin-top: 8px; }
+  .jj-flight .h2 { font-size: 8vw; }
+  .jj-flight .p5 { font-size: 4.5vw; }
+
+  /* Hide dims on small screens to save space */
+  .jj-flight .spec-s_left_bot .spec-block:last-child { display: none; }
 }

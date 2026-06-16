@@ -155,15 +155,17 @@ export default function TestimonialsSection() {
         .tk-barcode { height: 84%; align-self: center; width: clamp(56px, 9%, 116px); object-fit: contain; flex-shrink: 0; }
 
         @media (max-width: 760px) {
-          .tk-stack { aspect-ratio: auto; min-height: 380px; height: 48vh; }
-          .tk { flex-direction: column; }
-          .tk-left { flex: 0 0 auto; padding: 16px 20px; flex-direction: row; gap: 14px; }
-          .tk-photo { width: 56px; margin-bottom: 0; }
-          .tk-perf, .tk-barcode { display: none; }
-          .tk-content { padding: 16px 20px; }
-          .tk-quote { font-size: clamp(13px, 3.8vw, 18px) !important; }
-          .tk-name { font-size: clamp(13px, 3.5vw, 18px) !important; }
-          .tk-loc { font-size: clamp(10px, 2.5vw, 13px) !important; margin-top: 3px !important; }
+          .tk-stack { aspect-ratio: 1292 / 480; }
+          .tk { --zig: 14px; --zigw: 8px; border-radius: 10px; }
+          .tk-left { flex: 0 0 28%; padding: 4%; }
+          .tk-photo { width: 48%; border-radius: 14px; }
+          .tk-name { font-size: clamp(11px, 3vw, 16px) !important; }
+          .tk-loc { font-size: clamp(9px, 2.2vw, 12px) !important; margin-top: 4px !important; }
+          .tk-stars { font-size: clamp(9px, 2vw, 12px) !important; letter-spacing: 2px; margin-bottom: 4%; }
+          .tk-quote { font-size: clamp(11px, 3vw, 17px) !important; line-height: 1.35; }
+          .tk-content { padding: 4% 2% 4% 5%; }
+          .tk-barcode { width: clamp(28px, 7%, 48px); }
+          .tk-perf::before, .tk-perf::after { left: -8px; width: 16px; height: 16px; }
         }
       `}</style>
     </section>

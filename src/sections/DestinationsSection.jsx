@@ -145,7 +145,8 @@ export default function DestinationsSection() {
           .dest-row { gap: 3vw; }
           .dest-viewport { width: 8em; }
           .dest-globe { min-height: auto; display: flex; flex-direction: column; align-items: center; height: auto !important; }
-          .dest-globe-img { position: relative !important; left: auto !important; top: auto !important; transform: none !important; width: 90vw; }
+          .dest-globe-img { position: relative !important; left: auto !important; top: auto !important; transform: none !important; width: 70vw !important; overflow: hidden !important; }
+          .dest-globe-img canvas { width: 100% !important; height: 100% !important; }
           .g8-card { position: static; width: 100%; max-width: 420px; margin-top: -40px; }
         }
         @media (max-width: 640px) {
@@ -154,8 +155,9 @@ export default function DestinationsSection() {
           .dest-label { font-size: clamp(16px, 4.5vw, 22px) !important; }
           .dest-item { font-size: clamp(16px, 4.5vw, 22px) !important; }
           .dest-line { width: clamp(24px, 5vw, 48px) !important; }
-          .dest-globe-img { width: 95vw; }
-          .g8-card { padding: 24px 20px 24px !important; margin-top: -20px; }
+          .dest-globe-img { width: 90vw !important; height: 90vw !important; overflow: hidden !important; border-radius: 50% !important; }
+          .dest-globe-img canvas { width: 100% !important; height: 100% !important; }
+          .g8-card { padding: 24px 20px 24px !important; margin-top: -16px; }
           .g8-big { font-size: clamp(40px, 12vw, 60px) !important; }
           .g8-global { font-size: clamp(18px, 5vw, 28px) !important; }
         }
