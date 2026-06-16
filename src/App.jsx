@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import Lenis from 'lenis'
 import gsap from 'gsap'
@@ -8,11 +8,19 @@ import Footer from './components/Footer.jsx'
 import HomePage from './pages/HomePage.jsx'
 import FleetDetailPage from './pages/FleetDetailPage.jsx'
 import BookNowPage from './pages/BookNowPage.jsx'
+import AnimatedLogo from './components/AnimatedLogo.jsx'
 
 gsap.registerPlugin(ScrollTrigger)
 
 function App() {
-  // Initialize Lenis smooth scroll, synced with GSAP ScrollTrigger (Jesko's secret sauce)
+  const [splashDone, setSplashDone] = useState(false)
+  const [splashFading, setSplashFading] = useState(false)
+
+  const handleSplashComplete = () => {
+    setSplashFading(true)
+    setTimeout(() => setSplashDone(true), 600)
+  }
+
   useEffect(() => {
     const lenis = new Lenis({
       duration: 1.1,
@@ -36,6 +44,24 @@ function App() {
 
   return (
     <div className="min-h-screen">
+      {!splashDone && (
+        <div
+          style={{
+            position: 'fixed',
+            inset: 0,
+            zIndex: 9999,
+            background: '#FFF8ED',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            opacity: splashFading ? 0 : 1,
+            transition: 'opacity 0.6s ease',
+            pointerEvents: splashFading ? 'none' : 'auto',
+          }}
+        >
+          <AnimatedLogo width={260} onComplete={handleSplashComplete} />
+        </div>
+      )}
       <Navbar />
       <Routes>
         <Route path="/" element={<HomePage />} />

@@ -47,7 +47,7 @@ export default function FleetPage() {
             transition={{ duration: 0.5, delay: 0.25 }}
             className="text-white/60 text-sm font-light mt-2"
           >
-            Six exceptional aircraft — choose your perfect journey.
+            An exceptional charter fleet — choose your perfect journey.
           </motion.p>
         </div>
       </div>

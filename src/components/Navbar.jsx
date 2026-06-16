@@ -206,12 +206,12 @@ export default function Navbar() {
         .nav-book-text { }
 
         .nav-burger {
-          width: 22px; height: 16px;
+          width: 24px; height: 18px;
           position: relative; display: flex; flex-direction: column;
-          justify-content: space-between;
+          justify-content: center; gap: 5px;
         }
         .nav-burger span {
-          display: block; width: 100%; height: 2px;
+          display: block; width: 100%; height: 2.5px;
           background: #142544; border-radius: 2px;
           transition: transform 0.35s cubic-bezier(0.77,0,0.18,1),
                       opacity 0.25s ease;
@@ -237,6 +237,8 @@ export default function Navbar() {
           transition: opacity 0.4s cubic-bezier(0.4,0,0.2,1),
                       visibility 0s 0.4s;
           padding-top: 84px;
+          overflow-y: auto;
+          -webkit-overflow-scrolling: touch;
         }
         .nav-overlay[data-open="true"] {
           opacity: 1;
@@ -246,8 +248,8 @@ export default function Navbar() {
         }
 
         .nav-overlay-content {
-          height: 100%; display: flex; flex-direction: column;
-          justify-content: center; padding: 0 8vw;
+          min-height: 100%; display: flex; flex-direction: column;
+          justify-content: center; padding: 0 8vw 40px;
         }
 
         .nav-overlay-links {
@@ -295,7 +297,7 @@ export default function Navbar() {
           .nav-book-btn { font-size: 11px; padding: 8px 14px; }
           .nav-book-text { display: none; }
           .nav-overlay { padding-top: 64px; }
-          .nav-overlay-content { padding: 0 6vw; justify-content: flex-start; padding-top: 10vh; }
+          .nav-overlay-content { padding: 8vh 6vw 40px; justify-content: flex-start; }
           .nav-overlay-link { font-size: 24px; letter-spacing: 1px; padding: 8px 0; }
           .nav-overlay-bottom { margin-top: 32px; }
         }

@@ -4,7 +4,7 @@ export default function HeroSection() {
   const navigate = useNavigate()
 
   const scrollToFleet = () => {
-    document.getElementById('fleet')?.scrollIntoView({ behavior: 'smooth' })
+    document.getElementById('fly-in-luxury')?.scrollIntoView({ behavior: 'smooth' })
   }
 
   return (

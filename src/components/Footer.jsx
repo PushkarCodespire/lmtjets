@@ -38,7 +38,7 @@ export default function Footer() {
       {/* ── content ── */}
       <div style={{ position: 'relative', zIndex: 1 }}>
         <div style={{ padding: '72px 5vw 48px' }}>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
 
             {/* COL 1 — Logo + tagline + social */}
             <div>
@@ -74,15 +74,7 @@ export default function Footer() {
               ))}
             </div>
 
-            {/* COL 3 — Services */}
-            <div>
-              <span style={col}>Services</span>
-              {['On-Demand Charter', 'Jet Card Programme', 'Group Charters', 'Empty Legs', 'Ground Transport', 'Aircraft Management'].map(s => (
-                <span key={s} style={lnk}>{s}</span>
-              ))}
-            </div>
-
-            {/* COL 4 — Contact + badges */}
+            {/* COL 3 — Contact + badges */}
             <div>
               <span style={col}>Contact</span>
               <a href="tel:+18889292298" style={lnk} onMouseEnter={over} onMouseLeave={out}>+1 (888) 929-2298</a>

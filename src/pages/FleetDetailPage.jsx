@@ -29,20 +29,26 @@ export default function FleetDetailPage() {
 
   const specs = [
     { label: 'Passenger Capacity', value: `Up to ${aircraft.passengers} Passengers*`, sub: '+1 Cabin Crew' },
+    ...(aircraft.sleepingCapacity ? [{ label: 'Sleeping Capacity', value: `Up to ${aircraft.sleepingCapacity}`, sub: 'Berths' }] : []),
     { label: 'Range',              value: `${aircraft.range.toLocaleString()} NM`,     sub: aircraft.category },
     { label: 'Max Cruising Speed', value: `${aircraft.speed} KNOTS`,                    sub: `Mach ${(aircraft.speed / 661.5).toFixed(3)}` },
     { label: 'Max Operating Altitude', value: `${aircraft.altitude.toLocaleString()} FT`, sub: '' },
     { label: 'Baggage Capacity',   value: `${aircraft.baggage} FT³`,                    sub: '' },
     { label: 'Endurance',          value: `Up to ${aircraft.endurance} HRS`,            sub: '(Standard Crew)' },
+    ...(aircraft.lavatories ? [{ label: 'Lavatories', value: `${aircraft.lavatories}`, sub: 'Enclosed' }] : []),
+    ...(aircraft.wifiType ? [{ label: 'Connectivity', value: aircraft.wifiType, sub: 'In-Flight Wi-Fi' }] : []),
   ]
 
   const specIcons = {
     'Passenger Capacity': '👤',
+    'Sleeping Capacity': '🛏',
     'Range': '↔',
     'Max Cruising Speed': '✈',
     'Max Operating Altitude': '▲',
     'Baggage Capacity': '🧳',
     'Endurance': '⏱',
+    'Lavatories': '🚻',
+    'Connectivity': '📶',
   }
 
   return (

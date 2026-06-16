@@ -4,8 +4,10 @@
 import { useEffect, useRef } from 'react'
 import gsap from 'gsap'
 import Globe3D from '../components/Globe3D.jsx'
+import { routings } from '../data/routings.js'
 
-const CITIES = ['Zurich', 'Mykonos', 'Sydney', 'Nice', 'Milan', 'New York', 'Lagos', 'Dubai', 'Tokyo', 'London']
+// "Fly anywhere" rotator cycles the available empty-leg routings.
+const CITIES = routings.map((r) => `${r.from} → ${r.to}`)
 const ITEM_H = 54
 const VISIBLE = 5
 const CENTER = (VISIBLE - 1) / 2
@@ -93,13 +95,13 @@ export default function DestinationsSection() {
         .dest-line { width: clamp(48px, 6vw, 96px); height: 1px; background: rgba(20,37,68,0.28); }
         .dest-plane { color: #B8944F; display: flex; align-items: center; }
         .dest-viewport {
-          position: relative; overflow: hidden; width: 14em;
+          position: relative; overflow: hidden; width: clamp(240px, 30vw, 360px);
           -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 28%, #000 72%, transparent 100%);
           mask-image: linear-gradient(180deg, transparent 0%, #000 28%, #000 72%, transparent 100%);
         }
         .dest-list { will-change: transform; }
         .dest-item {
-          display: flex; align-items: center; font-size: clamp(20px, 2vw, 30px); font-weight: 500;
+          display: flex; align-items: center; font-size: clamp(18px, 1.9vw, 26px); font-weight: 500;
           color: rgba(20,37,68,0.22); transition: color 0.4s ease; white-space: nowrap;
         }
         .dest-item.is-current { color: #142544; }
@@ -143,7 +145,7 @@ export default function DestinationsSection() {
 
         @media (max-width: 900px) {
           .dest-row { gap: 3vw; }
-          .dest-viewport { width: 8em; }
+          .dest-viewport { width: clamp(200px, 68vw, 300px); }
           .dest-globe { min-height: auto; display: flex; flex-direction: column; align-items: center; height: auto !important; }
           .dest-globe-img { position: relative !important; left: auto !important; top: auto !important; transform: none !important; width: 70vw !important; overflow: hidden !important; }
           .dest-globe-img canvas { width: 100% !important; height: 100% !important; }
@@ -151,10 +153,11 @@ export default function DestinationsSection() {
         }
         @media (max-width: 640px) {
           .dest { padding: 40px 5vw 60px !important; }
-          .dest-row { flex-wrap: wrap; justify-content: center; }
+          .dest-row { flex-wrap: wrap; justify-content: center; gap: 12px; }
+          .dest-line { display: none !important; }
+          .dest-viewport { width: 100% !important; }
           .dest-label { font-size: clamp(16px, 4.5vw, 22px) !important; }
-          .dest-item { font-size: clamp(16px, 4.5vw, 22px) !important; }
-          .dest-line { width: clamp(24px, 5vw, 48px) !important; }
+          .dest-item { font-size: clamp(16px, 4.5vw, 22px) !important; justify-content: center; }
           .dest-globe-img { width: 90vw !important; height: 90vw !important; overflow: hidden !important; border-radius: 50% !important; }
           .dest-globe-img canvas { width: 100% !important; height: 100% !important; }
           .g8-card { padding: 24px 20px 24px !important; margin-top: -16px; }

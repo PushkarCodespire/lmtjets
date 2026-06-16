@@ -1,46 +1,27 @@
 import { useState, useMemo } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { fleet } from '../data/fleet.js'
+import QuoteForm from '../components/QuoteForm.jsx'
 
 const navy = '#142544'
 const gold = '#B8944F'
 
-// Hourly rate map by category — based on real-world industry charter rates
-const HOURLY_RATES = {
-  'Super Midsize':     { rate: 6500,  amenities: ['WiFi', 'Lavatory', 'Catering', 'Stand-up Cabin'] },
-  'Heavy Jet':         { rate: 8500,  amenities: ['WiFi', 'Lavatory', 'Catering', 'Three Living Zones'] },
-  'Ultra Long Range':  { rate: 12500, amenities: ['Ka-band WiFi', 'Crew Rest', 'Full Galley', 'Private Stateroom'] },
-}
-
 export default function BookNowPage() {
   const navigate = useNavigate()
-  const [from, setFrom] = useState('')
-  const [to, setTo] = useState('')
+  const [params] = useSearchParams()
+  const [from, setFrom] = useState(params.get('from') || '')
+  const [to, setTo] = useState(params.get('to') || '')
   const [date, setDate] = useState('')
-  const [pax, setPax] = useState(1)
-  const [searched, setSearched] = useState(false)
+  const [pax] = useState(1)
   const [sortBy, setSortBy] = useState('Recommended')
 
   // Filter fleet by passenger capacity, then sort
   const results = useMemo(() => {
     const filtered = fleet.filter(a => a.passengers >= pax)
-    const enriched = filtered.map(a => {
-      const cat = HOURLY_RATES[a.category] || HOURLY_RATES['Midsize Jet']
-      const total = Math.round(cat.rate * 2.0) // 2 hour estimate
-      return { ...a, hourly: cat.rate, estimatedTotal: total, amenitiesShown: cat.amenities }
-    })
-    if (sortBy === 'Price (Low)')  return [...enriched].sort((a, b) => a.hourly - b.hourly)
-    if (sortBy === 'Price (High)') return [...enriched].sort((a, b) => b.hourly - a.hourly)
-    if (sortBy === 'Range')        return [...enriched].sort((a, b) => b.range - a.range)
-    return enriched
+    if (sortBy === 'Range')      return [...filtered].sort((a, b) => b.range - a.range)
+    if (sortBy === 'Passengers') return [...filtered].sort((a, b) => b.passengers - a.passengers)
+    return filtered
   }, [pax, sortBy])
-
-  const handleSearch = () => {
-    setSearched(true)
-    setTimeout(() => {
-      document.getElementById('results')?.scrollIntoView({ behavior: 'smooth' })
-    }, 100)
-  }
 
   return (
     <div style={{ backgroundColor: '#FFF8ED', minHeight: '100vh' }}>
@@ -86,81 +67,12 @@ export default function BookNowPage() {
           </p>
         </div>
 
-        {/* ─── Search bar ─── */}
-        <div style={{
-          position: 'relative', zIndex: 3,
-          maxWidth: '1400px', margin: '0 auto',
-          padding: '0 48px 40px',
-        }}>
-          <div style={{
-            background: '#FFFFFF',
-            borderRadius: '8px',
-            padding: '20px 24px',
-            display: 'grid',
-            gridTemplateColumns: '1fr 1fr 1fr 1fr auto',
-            gap: '20px',
-            alignItems: 'end',
-            boxShadow: '0 12px 40px rgba(0,0,0,0.25)',
-          }} className="search-bar">
-
-            {/* FROM */}
-            <SearchField label="From" icon={<PinIcon />}>
-              <input
-                type="text" value={from} onChange={e => setFrom(e.target.value)}
-                placeholder="New York, NY"
-                style={inputBase}
-              />
-            </SearchField>
-
-            {/* TO */}
-            <SearchField label="To" icon={<PinIcon />}>
-              <input
-                type="text" value={to} onChange={e => setTo(e.target.value)}
-                placeholder="Miami, FL"
-                style={inputBase}
-              />
-            </SearchField>
-
-            {/* DATE */}
-            <SearchField label="Date" icon={<CalIcon />}>
-              <input
-                type="text" value={date} onChange={e => setDate(e.target.value)}
-                onFocus={e => e.target.type = 'date'}
-                onBlur={e => { if (!e.target.value) e.target.type = 'text' }}
-                placeholder="dd-mm-yyyy"
-                style={inputBase}
-              />
-            </SearchField>
-
-            {/* PASSENGERS */}
-            <SearchField label="Passengers" icon={<PaxIcon />}>
-              <select value={pax} onChange={e => setPax(Number(e.target.value))}
-                style={{ ...inputBase, appearance: 'none', cursor: 'pointer' }}>
-                {Array.from({ length: 19 }, (_, i) => i + 1).map(n => (
-                  <option key={n} value={n}>{n}</option>
-                ))}
-              </select>
-            </SearchField>
-
-            {/* SEARCH BUTTON */}
-            <button
-              onClick={handleSearch}
-              style={{
-                background: gold, color: '#FFFFFF', border: 'none',
-                padding: '20px 36px',
-                fontFamily: 'Inter, sans-serif', fontSize: '11px',
-                letterSpacing: '2.5px', textTransform: 'uppercase', fontWeight: 600,
-                cursor: 'pointer', borderRadius: '4px',
-                transition: 'background 0.3s', whiteSpace: 'nowrap',
-                height: '60px',
-              }}
-              onMouseEnter={e => e.currentTarget.style.background = '#D7B26A'}
-              onMouseLeave={e => e.currentTarget.style.background = gold}>
-              Search Jets →
-            </button>
-          </div>
-        </div>
       </section>
+
+      {/* Quote form — top overlaps the hero, the rest flows below */}
+      <div className="quote-overlap">
+        <QuoteForm defaults={{ from, to, date, passengers: pax }} />
+      </div>
 
       {/* ═══════════ RESULTS ═══════════ */}
       <section id="results" style={{ backgroundColor: '#FFF8ED', padding: '64px 48px', maxWidth: '1400px', margin: '0 auto' }}>
@@ -172,22 +84,15 @@ export default function BookNowPage() {
               letterSpacing: '4px', textTransform: 'uppercase',
               color: gold, marginBottom: '12px', fontWeight: 600,
             }}>
-              Available Aircraft For Your Journey
+              Our Charter Fleet
             </p>
             <h2 style={{
               fontFamily: "'Cormorant Garamond', Georgia, serif",
               fontSize: 'clamp(28px, 3vw, 38px)',
-              fontWeight: 500, color: navy, marginBottom: '12px',
+              fontWeight: 500, color: navy,
             }}>
-              We found {results.length} available aircraft
+              {results.length} aircraft available
             </h2>
-            {/* Filter summary */}
-            <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap', fontFamily: 'Inter, sans-serif', fontSize: '12px', color: 'rgba(20,37,68,0.55)' }}>
-              <FilterChip icon={<PaxIcon size={12} />}>From <strong style={{ color: navy }}>{from || 'New York, NY'}</strong></FilterChip>
-              <FilterChip icon={<PinIcon size={12} />}>To <strong style={{ color: navy }}>{to || 'Miami, FL'}</strong></FilterChip>
-              <FilterChip icon={<CalIcon size={12} />}>On <strong style={{ color: navy }}>{date || 'dd-mm-yyyy'}</strong></FilterChip>
-              <FilterChip icon={<PaxIcon size={12} />}><strong style={{ color: navy }}>{pax} Passenger{pax > 1 ? 's' : ''}</strong></FilterChip>
-            </div>
           </div>
 
           {/* Sort dropdown */}
@@ -207,9 +112,8 @@ export default function BookNowPage() {
                 backgroundPosition: 'right 10px center',
               }}>
               <option style={{ background: '#FFF8ED' }}>Recommended</option>
-              <option style={{ background: '#FFF8ED' }}>Price (Low)</option>
-              <option style={{ background: '#FFF8ED' }}>Price (High)</option>
               <option style={{ background: '#FFF8ED' }}>Range</option>
+              <option style={{ background: '#FFF8ED' }}>Passengers</option>
             </select>
           </div>
         </div>
@@ -226,26 +130,15 @@ export default function BookNowPage() {
             ))}
           </div>
         )}
-
-        {/* Disclaimer */}
-        <p style={{
-          textAlign: 'center', marginTop: '40px',
-          fontFamily: 'Inter, sans-serif', fontSize: '11px',
-          color: 'rgba(20,37,68,0.40)', fontStyle: 'italic',
-        }}>
-          *Pricing is an estimate and may vary based on availability, routing, and aircraft positioning.
-        </p>
       </section>
 
       <style>{`
-        @media (max-width: 1100px) {
-          .search-bar { grid-template-columns: 1fr 1fr !important; }
-          .search-bar button { grid-column: 1 / -1 !important; }
-        }
+        .quote-overlap { position: relative; z-index: 5; margin-top: -130px; }
         @media (max-width: 700px) {
-          .search-bar { grid-template-columns: 1fr !important; }
+          .quote-overlap { margin-top: -70px; }
           .ac-card { grid-template-columns: 1fr !important; }
           .ac-img { aspect-ratio: 16/9 !important; }
+          .ac-specs { grid-template-columns: 1fr 1fr !important; }
         }
       `}</style>
     </div>
@@ -286,115 +179,74 @@ function SearchField({ label, icon, children }) {
 }
 
 function AircraftCard({ aircraft, onClick }) {
+  const specs = [
+    { icon: <PaxIcon size={16} />, value: `Up to ${aircraft.passengers}`, label: 'Passengers' },
+    { icon: <RangeIcon />, value: `${aircraft.range.toLocaleString()} NM`, label: 'Range' },
+    { icon: <SpeedIcon />, value: `${aircraft.speed} kts`, label: 'Cruise Speed' },
+    ...(aircraft.sleepingCapacity ? [{ icon: <BedIcon />, value: `Up to ${aircraft.sleepingCapacity}`, label: 'Sleeping' }] : []),
+    { icon: <BagIcon />, value: `${aircraft.baggage} ft³`, label: 'Baggage' },
+    { icon: <WifiIcon />, value: aircraft.wifiType || 'Wi-Fi', label: 'Connectivity' },
+  ]
   return (
     <div style={{
       background: '#FFFFFF',
-      borderRadius: '6px', overflow: 'hidden',
-      display: 'grid', gridTemplateColumns: '300px 1fr 240px',
+      borderRadius: '8px', overflow: 'hidden',
+      display: 'grid', gridTemplateColumns: '320px 1fr',
       transition: 'all 0.3s',
       boxShadow: '0 2px 12px rgba(20,37,68,0.08)',
+      cursor: 'pointer',
     }} className="ac-card"
+      onClick={onClick}
       onMouseEnter={e => e.currentTarget.style.boxShadow = '0 8px 28px rgba(20,37,68,0.14)'}
       onMouseLeave={e => e.currentTarget.style.boxShadow = '0 2px 12px rgba(20,37,68,0.08)'}>
 
       {/* IMAGE */}
-      <div style={{ overflow: 'hidden', aspectRatio: '4/3' }} className="ac-img">
+      <div style={{ overflow: 'hidden' }} className="ac-img">
         <img src={aircraft.image} alt={aircraft.name}
           style={{ width: '100%', height: '100%', objectFit: 'cover' }}
           onError={(e) => { e.currentTarget.src = '/hero-bg.png' }} />
       </div>
 
-      {/* MIDDLE — Details */}
-      <div style={{ padding: '24px 28px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+      {/* DETAILS */}
+      <div style={{ padding: '26px 30px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+        <p style={{
+          fontFamily: 'Inter, sans-serif', fontSize: '10px',
+          letterSpacing: '2.5px', textTransform: 'uppercase',
+          color: gold, fontWeight: 600, marginBottom: '6px',
+        }}>
+          {aircraft.category}
+        </p>
         <h3 style={{
           fontFamily: "'Cormorant Garamond', Georgia, serif",
           fontSize: '26px', fontWeight: 500, color: navy,
-          textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '6px',
+          textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '10px',
         }}>
           {aircraft.name}
         </h3>
         <p style={{
-          fontFamily: 'Inter, sans-serif', fontSize: '10px',
-          letterSpacing: '2.5px', textTransform: 'uppercase',
-          color: gold, fontWeight: 600, marginBottom: '20px',
+          fontFamily: 'Inter, sans-serif', fontSize: '13px',
+          color: '#666', fontWeight: 300, lineHeight: 1.6, marginBottom: '22px', maxWidth: '660px',
         }}>
-          {aircraft.category}
+          {aircraft.description}
         </p>
 
-        {/* Specs row */}
-        <div style={{ display: 'flex', gap: '32px', marginBottom: '18px', flexWrap: 'wrap' }}>
-          <SpecItem icon={<PaxIcon size={16} />} value={aircraft.passengers} label="Passengers" />
-          <SpecItem icon={<RangeIcon />} value={`${aircraft.range.toLocaleString()} NM`} label="Range" />
-          <SpecItem icon={<SpeedIcon />} value={`${aircraft.speed} mph`} label="Cruise Speed" />
+        {/* Specs grid */}
+        <div className="ac-specs" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, minmax(0, 1fr))', gap: '16px 24px', marginBottom: '22px' }}>
+          {specs.map(s => <SpecItem key={s.label} icon={s.icon} value={s.value} label={s.label} />)}
         </div>
 
         {/* Amenities */}
         <div style={{
-          display: 'flex', gap: '4px', flexWrap: 'wrap', alignItems: 'center',
+          display: 'flex', gap: '8px 18px', flexWrap: 'wrap', alignItems: 'center',
           fontFamily: 'Inter, sans-serif', fontSize: '11px', color: '#666',
         }}>
-          {aircraft.amenitiesShown.map((a, i) => (
-            <span key={a} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <span style={{ color: gold, fontSize: '10px' }}>●</span>
+          {aircraft.amenities.slice(0, 6).map(a => (
+            <span key={a} style={{ display: 'flex', alignItems: 'center', gap: '7px' }}>
+              <span style={{ color: gold, fontSize: '9px' }}>●</span>
               {a}
-              {i < aircraft.amenitiesShown.length - 1 && <span style={{ width: '4px' }} />}
             </span>
           ))}
         </div>
-      </div>
-
-      {/* RIGHT — Price + actions */}
-      <div style={{
-        padding: '24px 24px', borderLeft: `1px solid ${navy}10`,
-        display: 'flex', flexDirection: 'column', justifyContent: 'center',
-      }}>
-        <p style={{
-          fontFamily: 'Inter, sans-serif', fontSize: '9px',
-          letterSpacing: '2.5px', textTransform: 'uppercase',
-          color: '#999', marginBottom: '4px',
-        }}>
-          Starting From
-        </p>
-        <p style={{
-          fontFamily: "'Cormorant Garamond', Georgia, serif",
-          fontSize: '32px', fontWeight: 500, color: navy,
-          lineHeight: 1, marginBottom: '4px',
-        }}>
-          ${aircraft.hourly.toLocaleString()}<span style={{ fontFamily: 'Inter', fontSize: '12px', color: '#666', marginLeft: '4px' }}>/ HR</span>
-        </p>
-        <p style={{
-          fontFamily: 'Inter, sans-serif', fontSize: '11px',
-          color: '#999', marginBottom: '18px',
-        }}>
-          Estimated Total: ${aircraft.estimatedTotal.toLocaleString()}*
-        </p>
-        <button onClick={onClick}
-          style={{
-            background: gold, color: '#FFFFFF', border: 'none',
-            padding: '12px 18px',
-            fontFamily: 'Inter, sans-serif', fontSize: '10px',
-            letterSpacing: '2.5px', textTransform: 'uppercase', fontWeight: 600,
-            cursor: 'pointer', borderRadius: '3px', marginBottom: '8px',
-            transition: 'background 0.3s',
-          }}
-          onMouseEnter={e => e.currentTarget.style.background = '#D7B26A'}
-          onMouseLeave={e => e.currentTarget.style.background = gold}>
-          View Aircraft
-        </button>
-        <button
-          style={{
-            background: 'transparent', color: navy,
-            border: `1px solid ${navy}30`,
-            padding: '12px 18px',
-            fontFamily: 'Inter, sans-serif', fontSize: '10px',
-            letterSpacing: '2.5px', textTransform: 'uppercase', fontWeight: 500,
-            cursor: 'pointer', borderRadius: '3px',
-            transition: 'all 0.3s',
-          }}
-          onMouseEnter={e => { e.currentTarget.style.background = navy; e.currentTarget.style.color = '#FFFFFF' }}
-          onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = navy }}>
-          Request Quote
-        </button>
       </div>
     </div>
   )
@@ -452,5 +304,25 @@ const SpeedIcon = ({ size = 16 }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round">
     <path d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/>
     <polyline points="12 7 12 12 15 14"/>
+  </svg>
+)
+const BedIcon = ({ size = 16 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round">
+    <path d="M3 18v-6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v6"/>
+    <line x1="3" y1="18" x2="21" y2="18"/>
+    <path d="M7 10V8a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v2"/>
+  </svg>
+)
+const BagIcon = ({ size = 16 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round">
+    <rect x="5" y="8" width="14" height="12" rx="2"/>
+    <path d="M9 8V6a3 3 0 0 1 6 0v2"/>
+  </svg>
+)
+const WifiIcon = ({ size = 16 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round">
+    <path d="M5 12.5a10 10 0 0 1 14 0"/>
+    <path d="M8.5 16a5 5 0 0 1 7 0"/>
+    <circle cx="12" cy="19" r="0.8" fill="currentColor"/>
   </svg>
 )

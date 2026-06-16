@@ -15,7 +15,95 @@ const CABIN_GALLERY = [
 
 export const fleet = [
   /* ──────────────────────────────────────────────────
-     1. BOMBARDIER GLOBAL 6000  — Ultra Long Range Flagship
+     1. BOMBARDIER GLOBAL 7500  — Ultra-Long-Range Flagship
+  ────────────────────────────────────────────────── */
+  {
+    id: 'global-7500',
+    name: 'Bombardier Global 7500',
+    category: 'Ultra Long Range',
+    tagline: 'The new global standard in ultra-long-range luxury.',
+    storyline: 'Four spaces.\nOne masterpiece.',
+    storyDesc: 'The Bombardier Global 7500 is one of the world\'s premier ultra-long-range business jets. Featuring four luxurious living spaces, a private bedroom suite, and industry-leading range, it connects major global cities non-stop while delivering exceptional comfort and productivity.',
+    passengers: 19,
+    sleepingCapacity: 6,
+    range: 7700,
+    speed: 616,        // KTAS, ~Mach 0.925
+    altitude: 51000,
+    baggage: 195,
+    endurance: 16,
+    cabinHeight: 6.2,
+    cabinWidth: 8.0,
+    cabinLength: 54.4,
+    wifi: true,
+    wifiType: 'Global High-Speed Starlink',
+    lavatory: true,
+    lavatories: 2,
+    catering: true,
+    bestFor: 'New York to Hong Kong, London to Singapore nonstop — the longest missions in comfort',
+    description: 'Bombardier\'s flagship. 7,700 nm with four living spaces and a private bedroom suite.',
+    image:         EXT_LOCAL_SUNSET,
+    heroVideo:     '/global-6000-video.mp4',
+    interiorImage: CABIN_GALLERY[0],
+    exteriorImage: EXT_LOCAL_SUNSET,
+    gallery: CABIN_GALLERY,
+    amenities: [
+      'Starlink High-Speed Internet',
+      'Apple TV Entertainment',
+      'HD Monitors',
+      'Full-Service Galley',
+      'Coffee & Espresso Machine',
+      'Wine Chillers',
+      'Private Bedroom Suite',
+      'Touchscreen Cabin Controls',
+      'In-Flight Baggage Access',
+    ],
+  },
+
+  /* ──────────────────────────────────────────────────
+     2. GULFSTREAM G650ER  — Long-Range Performance Icon
+  ────────────────────────────────────────────────── */
+  {
+    id: 'gulfstream-g650er',
+    name: 'Gulfstream G650ER',
+    category: 'Ultra Long Range',
+    tagline: 'Speed, range and luxury without compromise.',
+    storyline: 'The world,\nnonstop.',
+    storyDesc: 'The Gulfstream G650ER is renowned for its speed, range, and luxury. Ideal for intercontinental travel, it combines cutting-edge technology with one of the most spacious cabins in private aviation.',
+    passengers: 19,
+    sleepingCapacity: 6,
+    range: 7500,
+    speed: 612,        // KTAS, ~Mach 0.925
+    altitude: 51000,
+    baggage: 195,
+    endurance: 15,
+    cabinHeight: 6.5,
+    cabinWidth: 8.5,
+    cabinLength: 46.8,
+    wifi: true,
+    wifiType: 'High-Speed Ku-band Wi-Fi',
+    lavatory: true,
+    lavatories: 2,
+    catering: true,
+    bestFor: 'New York to Tokyo, LA to Sydney — nonstop intercontinental travel',
+    description: 'The G650ER. 7,500 nm at Mach 0.925 with one of the most spacious cabins in aviation.',
+    image:         EXT_TARMAC,
+    heroVideo:     '/g550-video.mp4',
+    interiorImage: CABIN_GALLERY[2],
+    exteriorImage: EXT_TARMAC,
+    gallery: CABIN_GALLERY,
+    amenities: [
+      'High-Speed Wi-Fi',
+      'Conference Seating',
+      'Lie-Flat Beds',
+      'Premium Entertainment System',
+      'Large Baggage Capacity',
+      '16 Panoramic Windows',
+      'Forward & Aft Lavatories',
+    ],
+  },
+
+  /* ──────────────────────────────────────────────────
+     3. BOMBARDIER GLOBAL 6000  — Ultra Long Range Flagship
   ────────────────────────────────────────────────── */
   {
     id: 'global-6000',
@@ -25,6 +113,7 @@ export const fleet = [
     storyline: 'A world\nwithout limits.',
     storyDesc: 'The Global 6000 is one of the most accomplished ultra-long-range business jets ever built. With a 6,000 nm range, advanced Vision Flight Deck and a cabin engineered for true productivity and rest, it connects continents with first-class composure.',
     passengers: 13,
+    sleepingCapacity: 6,
     range: 6000,
     speed: 590,        // ~Mach 0.89
     altitude: 51000,
@@ -34,7 +123,9 @@ export const fleet = [
     cabinWidth: 8.2,
     cabinLength: 43.3,
     wifi: true,
+    wifiType: 'Ka-band High-Speed Wi-Fi',
     lavatory: true,
+    lavatories: 2,
     catering: true,
     bestFor: 'NY to Tokyo, NY to Dubai nonstop — ultra-long intercontinental missions',
     description: 'Bombardier\'s flagship ultra-long-range jet. 6,000 nm with Vision Flight Deck.',
@@ -55,7 +146,7 @@ export const fleet = [
   },
 
   /* ──────────────────────────────────────────────────
-     2. BOMBARDIER GLOBAL 5500  — Performance Long-Range
+     4. BOMBARDIER GLOBAL 5500  — Performance Long-Range
   ────────────────────────────────────────────────── */
   {
     id: 'global-5500',
@@ -65,6 +156,7 @@ export const fleet = [
     storyline: 'Long-range,\nelevated.',
     storyDesc: 'The Global 5500 pairs a 5,900 nm range with a Mach 0.90 max speed and the all-new Nuage cabin — making it one of the fastest, most refined performers in its class. Connecting major financial hubs with effortless reach.',
     passengers: 12,
+    sleepingCapacity: 4,
     range: 5900,
     speed: 595,        // ~Mach 0.90
     altitude: 51000,
@@ -74,7 +166,9 @@ export const fleet = [
     cabinWidth: 8.2,
     cabinLength: 40.7,
     wifi: true,
+    wifiType: 'Ka-band High-Speed Wi-Fi',
     lavatory: true,
+    lavatories: 2,
     catering: true,
     bestFor: 'NY to Hong Kong, London to Buenos Aires — premium long-haul comfort',
     description: 'Bombardier Global 5500 — Mach 0.90 speed with a 5,900 nm range and the Nuage cabin.',
@@ -95,7 +189,7 @@ export const fleet = [
   },
 
   /* ──────────────────────────────────────────────────
-     3. GULFSTREAM G550  — The Long-Range Icon
+     5. GULFSTREAM G550  — The Long-Range Icon
   ────────────────────────────────────────────────── */
   {
     id: 'gulfstream-g550',
@@ -103,10 +197,11 @@ export const fleet = [
     category: 'Ultra Long Range',
     tagline: 'The benchmark for ultra-long-range performance.',
     storyline: 'The world\nwithout layovers.',
-    storyDesc: 'The G550 set the standard for ultra-long-range business aviation. With 6,750 nm of range and a quiet, three-zone cabin for up to 18 passengers, it has flown VIPs and heads of state across the globe nonstop for nearly two decades.',
-    passengers: 14,
+    storyDesc: 'The G550 set the standard for ultra-long-range business aviation. With 6,750 nm of range and a quiet, three-zone cabin, it has flown VIPs and heads of state across the globe nonstop for nearly two decades. A proven long-range aircraft offering reliability, comfort, and nonstop international capability for business and leisure travelers.',
+    passengers: 16,
+    sleepingCapacity: 6,
     range: 6750,
-    speed: 561,        // ~Mach 0.885 / 488 knots
+    speed: 561,        // ~Mach 0.885
     altitude: 51000,
     baggage: 226,
     endurance: 13,
@@ -114,7 +209,9 @@ export const fleet = [
     cabinWidth: 7.4,
     cabinLength: 43.9,
     wifi: true,
+    wifiType: 'Satellite High-Speed Wi-Fi',
     lavatory: true,
+    lavatories: 2,
     catering: true,
     bestFor: 'NY to London, NY to Tokyo, LA to Sydney — celebrated heavy jet workhorse',
     description: 'The legendary G550. 6,750 nm range with three living zones and proven reliability.',
@@ -124,18 +221,18 @@ export const fleet = [
     exteriorImage: EXT_TARMAC,
     gallery: CABIN_GALLERY,
     amenities: [
-      'PlaneView Cockpit',
+      'Private Sleeping Area',
+      'Satellite Communications',
+      'Premium Entertainment Systems',
+      'Spacious Conference Area',
       'Three Living Zones',
-      '14 Panoramic Windows',
       'Forward & Aft Lavatories',
       'Full Galley',
-      'Crew Rest Area',
-      'Honeywell SwiftBroadband Wi-Fi',
     ],
   },
 
   /* ──────────────────────────────────────────────────
-     4. GULFSTREAM V  — Pioneer of Ultra-Long-Range
+     6. GULFSTREAM V  — Pioneer of Ultra-Long-Range
   ────────────────────────────────────────────────── */
   {
     id: 'gulfstream-v',
@@ -145,6 +242,7 @@ export const fleet = [
     storyline: 'The original\nlong-range master.',
     storyDesc: 'Introduced in 1997, the Gulfstream V was the world\'s first ultra-long-range business jet, capable of flying 6,500 nm nonstop. Its proven Rolls-Royce engines, spacious 50-foot cabin and unmatched reliability make it a workhorse of global private aviation.',
     passengers: 14,
+    sleepingCapacity: 6,
     range: 6500,
     speed: 528,        // ~Mach 0.85 / 459 knots
     altitude: 51000,
@@ -154,7 +252,9 @@ export const fleet = [
     cabinWidth: 7.4,
     cabinLength: 50.1,
     wifi: true,
+    wifiType: 'High-Speed Satellite Wi-Fi',
     lavatory: true,
+    lavatories: 2,
     catering: true,
     bestFor: 'Global intercontinental missions, government and VIP delegations',
     description: 'The world\'s first ultra-long-range business jet — 6,500 nm with a 50-foot cabin.',
@@ -175,7 +275,7 @@ export const fleet = [
   },
 
   /* ──────────────────────────────────────────────────
-     5. GULFSTREAM IV  — Heavy-Jet Legend
+     7. GULFSTREAM IV  — Heavy-Jet Legend
   ────────────────────────────────────────────────── */
   {
     id: 'gulfstream-iv',
@@ -185,6 +285,7 @@ export const fleet = [
     storyline: 'A timeless\nstandard.',
     storyDesc: 'With more than three decades of service and 900+ aircraft delivered, the Gulfstream IV remains one of the most respected heavy jets ever built. A 4,200 nm range and a quiet, spacious cabin make it ideal for transcontinental US travel and Atlantic crossings.',
     passengers: 13,
+    sleepingCapacity: 4,
     range: 4200,
     speed: 508,        // ~Mach 0.80 / 450 knots
     altitude: 45000,
@@ -194,7 +295,9 @@ export const fleet = [
     cabinWidth: 7.3,
     cabinLength: 45.1,
     wifi: true,
+    wifiType: 'Satellite Wi-Fi',
     lavatory: true,
+    lavatories: 2,
     catering: true,
     bestFor: 'Coast-to-coast US, NY to London — legendary heavy jet',
     description: 'The Gulfstream IV heavy-jet legend. 4,200 nm with a quiet, 45-foot cabin.',
@@ -215,7 +318,7 @@ export const fleet = [
   },
 
   /* ──────────────────────────────────────────────────
-     6. GULFSTREAM G280  — Super-Midsize Performance
+     8. GULFSTREAM G280  — Super-Midsize Performance
   ────────────────────────────────────────────────── */
   {
     id: 'gulfstream-g280',
@@ -225,6 +328,7 @@ export const fleet = [
     storyline: 'Range.\nReimagined.',
     storyDesc: 'The G280 redefined the super-midsize category — flying 3,600 nm nonstop with the longest, tallest cabin in its class. Whisper-quiet Honeywell engines and Gulfstream\'s signature 100% fresh air cabin make every journey effortless.',
     passengers: 10,
+    sleepingCapacity: 4,
     range: 3600,
     speed: 482,        // ~Mach 0.84 / 459 knots
     altitude: 45000,
@@ -234,7 +338,9 @@ export const fleet = [
     cabinWidth: 7.1,
     cabinLength: 25.8,
     wifi: true,
+    wifiType: 'High-Speed Wi-Fi',
     lavatory: true,
+    lavatories: 1,
     catering: true,
     bestFor: 'NY to London nonstop, LA to Hawaii, transcontinental executive travel',
     description: 'Best-in-class super-midsize. 3,600 nm with the longest cabin in segment.',
@@ -244,18 +350,18 @@ export const fleet = [
     exteriorImage: EXT_JET_AIR,
     gallery: CABIN_GALLERY,
     amenities: [
+      'High-Speed Internet',
+      'Stand-Up Cabin',
+      'Spacious Baggage Compartment',
       '100% Fresh Air Cabin',
       'Honeywell HTF7250G Engines',
-      'PlaneView 280 Cockpit',
       'Forward Galley',
       'Enclosed Aft Lavatory',
-      'Generous Baggage Hold',
-      'High-Speed Wi-Fi',
     ],
   },
 
   /* ──────────────────────────────────────────────────
-     7. GULFSTREAM G200  — Super-Midsize Original
+     9. GULFSTREAM G200  — Super-Midsize Original
   ────────────────────────────────────────────────── */
   {
     id: 'gulfstream-g200',
@@ -265,6 +371,7 @@ export const fleet = [
     storyline: 'Proven\nat every altitude.',
     storyDesc: 'The Gulfstream G200 was the first super-midsize business jet — combining heavy-jet cabin comfort with midsize-jet operating economics. Its 3,400 nm range and stand-up cabin make it a workhorse for transcontinental and short transatlantic missions.',
     passengers: 9,
+    sleepingCapacity: 3,
     range: 3400,
     speed: 528,        // ~Mach 0.80 / 459 knots
     altitude: 45000,
@@ -274,7 +381,9 @@ export const fleet = [
     cabinWidth: 7.2,
     cabinLength: 24.3,
     wifi: true,
+    wifiType: 'Optional Wi-Fi',
     lavatory: true,
+    lavatories: 1,
     catering: true,
     bestFor: 'Coast-to-coast US, mid-range international, executive group travel',
     description: 'The original super-midsize. 3,400 nm with a stand-up cabin and proven reliability.',
@@ -291,6 +400,329 @@ export const fleet = [
       'Baggage Access from Cabin',
       'Cabin Entertainment',
       'Optional Wi-Fi',
+    ],
+  },
+
+  /* ──────────────────────────────────────────────────
+     10. DASSAULT FALCON 7X  — Long-Range Trijet
+  ────────────────────────────────────────────────── */
+  {
+    id: 'falcon-7x',
+    name: 'Dassault Falcon 7X',
+    category: 'Ultra Long Range',
+    tagline: 'Efficiency and access, redefined.',
+    storyline: 'Reach more.\nCompromise less.',
+    storyDesc: 'The Falcon 7X offers exceptional efficiency and performance, capable of accessing airports unavailable to many large-cabin jets while maintaining superior passenger comfort.',
+    passengers: 14,
+    sleepingCapacity: 4,
+    range: 5950,
+    speed: 595,        // ~Mach 0.90
+    altitude: 51000,
+    baggage: 140,
+    endurance: 11,
+    cabinHeight: 6.2,
+    cabinWidth: 7.7,
+    cabinLength: 39.1,
+    wifi: true,
+    wifiType: 'High-Speed Wi-Fi',
+    lavatory: true,
+    lavatories: 1,
+    catering: true,
+    bestFor: 'Steep-approach airports like London City, transcontinental and transatlantic missions',
+    description: 'Dassault\'s long-range trijet. 5,950 nm with steep-approach airport access.',
+    image:         EXT_FALCON_SUNSET,
+    heroVideo:     '/g280-video.mp4',
+    interiorImage: CABIN_GALLERY[2],
+    exteriorImage: EXT_FALCON_SUNSET,
+    gallery: CABIN_GALLERY,
+    amenities: [
+      'Three-Zone Cabin',
+      'Wi-Fi Connectivity',
+      'Full Galley',
+      'Flat-Floor Cabin',
+      'Three-Engine Reliability',
+      'Enclosed Lavatory',
+    ],
+  },
+
+  /* ──────────────────────────────────────────────────
+     11. GULFSTREAM G500  — Advanced Long-Range
+  ────────────────────────────────────────────────── */
+  {
+    id: 'gulfstream-g500',
+    name: 'Gulfstream G500',
+    category: 'Heavy Jet',
+    tagline: 'Advanced technology meets effortless comfort.',
+    storyline: 'Modern\nby design.',
+    storyDesc: 'The Gulfstream G500 blends advanced technology with luxurious comfort, making it a preferred choice for corporate and executive travel.',
+    passengers: 16,
+    sleepingCapacity: 4,
+    range: 5300,
+    speed: 612,        // ~Mach 0.925
+    altitude: 51000,
+    baggage: 175,
+    endurance: 11,
+    cabinHeight: 6.2,
+    cabinWidth: 7.7,
+    cabinLength: 41.6,
+    wifi: true,
+    wifiType: 'High-Speed Wi-Fi',
+    lavatory: true,
+    lavatories: 1,
+    catering: true,
+    bestFor: 'Coast-to-coast US and transatlantic executive travel',
+    description: 'The G500. 5,300 nm at Mach 0.925 with panoramic windows and a modern cabin.',
+    image:         EXT_JET_AIR,
+    heroVideo:     '/g280-video.mp4',
+    interiorImage: CABIN_GALLERY[1],
+    exteriorImage: EXT_JET_AIR,
+    gallery: CABIN_GALLERY,
+    amenities: [
+      'Panoramic Windows',
+      'Advanced Cabin Management',
+      'High-Speed Wi-Fi',
+      'Modern Interior Design',
+      'Forward Galley',
+      'Enclosed Lavatory',
+    ],
+  },
+
+  /* ──────────────────────────────────────────────────
+     12. DASSAULT FALCON 900EX  — Three-Engine Heavy Jet
+  ────────────────────────────────────────────────── */
+  {
+    id: 'falcon-900ex',
+    name: 'Dassault Falcon 900EX',
+    category: 'Heavy Jet',
+    tagline: 'Three-engine versatility and transcontinental reach.',
+    storyline: 'Trijet\nassurance.',
+    storyDesc: 'The Falcon 900EX combines versatility, performance, and operating efficiency with excellent transcontinental capability.',
+    passengers: 14,
+    sleepingCapacity: 4,
+    range: 4750,
+    speed: 555,        // ~Mach 0.84
+    altitude: 51000,
+    baggage: 127,
+    endurance: 9,
+    cabinHeight: 6.2,
+    cabinWidth: 7.7,
+    cabinLength: 33.2,
+    wifi: true,
+    wifiType: 'Wi-Fi Connectivity',
+    lavatory: true,
+    lavatories: 1,
+    catering: true,
+    bestFor: 'Transcontinental US and short transatlantic missions with steep-approach capability',
+    description: 'Dassault\'s three-engine heavy jet. 4,750 nm with transcontinental capability.',
+    image:         EXT_FALCON_SUNSET,
+    heroVideo:     '/g550-video.mp4',
+    interiorImage: CABIN_GALLERY[3],
+    exteriorImage: EXT_FALCON_SUNSET,
+    gallery: CABIN_GALLERY,
+    amenities: [
+      'Three-Engine Safety',
+      'Comfortable Cabin Layout',
+      'Wi-Fi Connectivity',
+      'Full Galley',
+      'Enclosed Lavatory',
+    ],
+  },
+
+  /* ──────────────────────────────────────────────────
+     13. BOMBARDIER CHALLENGER 604  — Large-Cabin Value
+  ────────────────────────────────────────────────── */
+  {
+    id: 'challenger-604',
+    name: 'Bombardier Challenger 604',
+    category: 'Heavy Jet',
+    tagline: 'Large-cabin comfort with proven reliability.',
+    storyline: 'Space and\nvalue.',
+    storyDesc: 'A popular large-cabin aircraft offering comfort, reliability, and value for medium and long-range missions.',
+    passengers: 12,
+    sleepingCapacity: 3,
+    range: 4000,
+    speed: 470,        // ~Mach 0.80
+    altitude: 41000,
+    baggage: 115,
+    endurance: 8,
+    cabinHeight: 6.1,
+    cabinWidth: 8.2,
+    cabinLength: 28.3,
+    wifi: true,
+    wifiType: 'Cabin Wi-Fi',
+    lavatory: true,
+    lavatories: 1,
+    catering: true,
+    bestFor: 'Coast-to-coast US and regional international travel',
+    description: 'A popular large-cabin jet. 4,000 nm with comfort, reliability, and value.',
+    image:         EXT_WING_CLOUDS,
+    heroVideo:     '/g280-video.mp4',
+    interiorImage: CABIN_GALLERY[0],
+    exteriorImage: EXT_WING_CLOUDS,
+    gallery: CABIN_GALLERY,
+    amenities: [
+      'Executive Seating',
+      'Refreshment Center',
+      'Spacious Baggage Area',
+      'Enclosed Lavatory',
+    ],
+  },
+
+  /* ──────────────────────────────────────────────────
+     14. EMBRAER LEGACY 600  — Spacious Large Cabin
+  ────────────────────────────────────────────────── */
+  {
+    id: 'embraer-legacy-600',
+    name: 'Embraer Legacy 600',
+    category: 'Heavy Jet',
+    tagline: 'Exceptional cabin space for groups and families.',
+    storyline: 'Room to\nthrive.',
+    storyDesc: 'The Legacy 600 provides exceptional cabin space and comfort, making it ideal for corporate groups and family travel.',
+    passengers: 13,
+    sleepingCapacity: 4,
+    range: 3400,
+    speed: 459,        // ~Mach 0.80
+    altitude: 41000,
+    baggage: 240,
+    endurance: 7,
+    cabinHeight: 6.0,
+    cabinWidth: 6.9,
+    cabinLength: 42.5,
+    wifi: true,
+    wifiType: 'Cabin Wi-Fi',
+    lavatory: true,
+    lavatories: 1,
+    catering: true,
+    bestFor: 'Corporate group and family travel across the US and regional international',
+    description: 'The Legacy 600. 3,400 nm with three cabin zones and exceptional space.',
+    image:         EXT_CESSNA_LANDING,
+    heroVideo:     '/g280-video.mp4',
+    interiorImage: CABIN_GALLERY[1],
+    exteriorImage: EXT_CESSNA_LANDING,
+    gallery: CABIN_GALLERY,
+    amenities: [
+      'Three Cabin Zones',
+      'Full Galley',
+      'Lavatory Facilities',
+      'Spacious Baggage Compartment',
+    ],
+  },
+
+  /* ──────────────────────────────────────────────────
+     15. BOMBARDIER CHALLENGER 300  — Super-Midsize Benchmark
+  ────────────────────────────────────────────────── */
+  {
+    id: 'challenger-300',
+    name: 'Bombardier Challenger 300',
+    category: 'Super Midsize',
+    tagline: 'The benchmark super-midsize performer.',
+    storyline: 'Performance\nperfected.',
+    storyDesc: 'One of the most successful super-midsize business jets, offering excellent performance and cabin comfort.',
+    passengers: 9,
+    sleepingCapacity: 3,
+    range: 3100,
+    speed: 470,        // ~Mach 0.80
+    altitude: 45000,
+    baggage: 106,
+    endurance: 7,
+    cabinHeight: 6.1,
+    cabinWidth: 7.2,
+    cabinLength: 28.6,
+    wifi: true,
+    wifiType: 'Wi-Fi',
+    lavatory: true,
+    lavatories: 1,
+    catering: true,
+    bestFor: 'Coast-to-coast US nonstop with super-midsize comfort',
+    description: 'A best-selling super-midsize jet. 3,100 nm with excellent performance and comfort.',
+    image:         EXT_JET_AIR,
+    heroVideo:     '/g280-video.mp4',
+    interiorImage: CABIN_GALLERY[2],
+    exteriorImage: EXT_JET_AIR,
+    gallery: CABIN_GALLERY,
+    amenities: [
+      'Wi-Fi',
+      'Executive Seating',
+      'Refreshment Center',
+      'Enclosed Lavatory',
+    ],
+  },
+
+  /* ──────────────────────────────────────────────────
+     16. CESSNA CITATION SOVEREIGN  — Versatile Midsize
+  ────────────────────────────────────────────────── */
+  {
+    id: 'citation-sovereign',
+    name: 'Cessna Citation Sovereign',
+    category: 'Midsize',
+    tagline: 'Versatile performance with a spacious cabin.',
+    storyline: 'Access\nanywhere.',
+    storyDesc: 'The Citation Sovereign is known for its versatility, short-runway performance, and spacious cabin.',
+    passengers: 12,
+    range: 3200,
+    speed: 458,        // ~Mach 0.80
+    altitude: 47000,
+    baggage: 135,
+    endurance: 6,
+    cabinHeight: 5.7,
+    cabinWidth: 5.5,
+    cabinLength: 25.3,
+    wifi: true,
+    wifiType: 'Wi-Fi',
+    lavatory: true,
+    lavatories: 1,
+    catering: true,
+    bestFor: 'Short-runway airports and regional US/international travel',
+    description: 'The Citation Sovereign. 3,200 nm with short-runway performance and a flat-floor cabin.',
+    image:         EXT_CESSNA_LANDING,
+    heroVideo:     '/g280-video.mp4',
+    interiorImage: CABIN_GALLERY[3],
+    exteriorImage: EXT_CESSNA_LANDING,
+    gallery: CABIN_GALLERY,
+    amenities: [
+      'Flat-Floor Cabin',
+      'Refreshment Center',
+      'Wi-Fi',
+      'Enclosed Lavatory',
+    ],
+  },
+
+  /* ──────────────────────────────────────────────────
+     17. HAWKER 850XP  — Refined Midsize
+  ────────────────────────────────────────────────── */
+  {
+    id: 'hawker-850xp',
+    name: 'Hawker 850XP',
+    category: 'Midsize',
+    tagline: 'A refined midsize jet for regional travel.',
+    storyline: 'Comfort,\nclose to home.',
+    storyDesc: 'A reliable midsize business jet ideal for regional and cross-country travel with excellent cabin comfort.',
+    passengers: 8,
+    range: 2500,
+    speed: 448,        // ~Mach 0.80
+    altitude: 41000,
+    baggage: 50,
+    endurance: 5,
+    cabinHeight: 5.75,
+    cabinWidth: 6.0,
+    cabinLength: 21.3,
+    wifi: true,
+    wifiType: 'Cabin Wi-Fi',
+    lavatory: true,
+    lavatories: 1,
+    catering: true,
+    bestFor: 'Regional and cross-country travel with midsize comfort',
+    description: 'The Hawker 850XP. 2,500 nm midsize jet with comfortable executive seating.',
+    image:         EXT_TARMAC,
+    heroVideo:     '/g280-video.mp4',
+    interiorImage: CABIN_GALLERY[0],
+    exteriorImage: EXT_TARMAC,
+    gallery: CABIN_GALLERY,
+    amenities: [
+      'Comfortable Executive Seating',
+      'Entertainment System',
+      'Refreshment Center',
+      'Enclosed Lavatory',
     ],
   },
 ]
