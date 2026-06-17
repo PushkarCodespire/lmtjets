@@ -2,6 +2,8 @@
    Cream background, contact rows with action links, address, and a jet-interior
    image on the right. */
 
+import RiseUp from '../components/RiseUp.jsx'
+
 const NAVY = '#142544'
 const GOLD = '#B8944F'
 const CREAM = '#FFF8ED'
@@ -41,29 +43,31 @@ export default function ContactSection() {
       }}>
         {/* LEFT — heading + rows + address */}
         <div>
-          <p style={{
-            fontFamily: 'Inter, sans-serif', fontSize: '13px', fontWeight: 500,
-            letterSpacing: '5px', textTransform: 'uppercase', color: GOLD, margin: 0,
-          }}>
-            Reach Us
-          </p>
-          <h2 style={{
-            fontFamily: 'Arial, sans-serif', fontSize: 'clamp(28px, 3vw, 44px)',
-            fontWeight: 400, color: NAVY, margin: '16px 0 14px', lineHeight: 1.05,
-          }}>
-            Get In Touch
-          </h2>
-          <div style={{ width: '48px', height: '2.4px', backgroundColor: GOLD }} />
-          <p style={{
-            fontFamily: 'Inter, sans-serif', fontSize: '14px', fontWeight: 300,
-            color: '#666666', margin: '24px 0 30px',
-          }}>
-            Available 24 hours a day, 7 days a week.
-          </p>
+          <RiseUp>
+            <p style={{
+              fontFamily: 'Inter, sans-serif', fontSize: '13px', fontWeight: 500,
+              letterSpacing: '5px', textTransform: 'uppercase', color: GOLD, margin: 0,
+            }}>
+              Reach Us
+            </p>
+            <h2 style={{
+              fontFamily: 'Arial, sans-serif', fontSize: 'clamp(28px, 3vw, 44px)',
+              fontWeight: 400, color: NAVY, margin: '16px 0 14px', lineHeight: 1.05,
+            }}>
+              Get In Touch
+            </h2>
+            <div style={{ width: '48px', height: '2.4px', backgroundColor: GOLD }} />
+            <p style={{
+              fontFamily: 'Inter, sans-serif', fontSize: '14px', fontWeight: 300,
+              color: '#666666', margin: '24px 0 30px',
+            }}>
+              Available 24 hours a day, 7 days a week.
+            </p>
+          </RiseUp>
 
           {ROWS.map((r) => (
+            <RiseUp key={r.label}>
             <a
-              key={r.label}
               href={r.href}
               target={r.href.startsWith('http') ? '_blank' : undefined}
               rel={r.href.startsWith('http') ? 'noreferrer' : undefined}
@@ -106,6 +110,7 @@ export default function ContactSection() {
                 {r.action} →
               </span>
             </a>
+            </RiseUp>
           ))}
 
           {/* address */}
@@ -125,13 +130,15 @@ export default function ContactSection() {
         </div>
 
         {/* RIGHT — jet interior image */}
-        <div style={{ borderRadius: '14px', overflow: 'hidden', aspectRatio: '659 / 685' }}>
-          <img
-            src="/contact-jet.png"
-            alt="Private jet interior"
-            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-          />
-        </div>
+        <RiseUp>
+          <div style={{ borderRadius: '14px', overflow: 'hidden', aspectRatio: '659 / 685' }}>
+            <img
+              src="/contact-jet.png"
+              alt="Private jet interior"
+              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+            />
+          </div>
+        </RiseUp>
       </div>
 
       <style>{`

@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom'
+import RiseUp from '../components/RiseUp.jsx'
 
 const navy = '#142544'
 const gold = '#B8944F'
@@ -90,29 +91,31 @@ export default function ServicesSection() {
 
         {/* LEFT — Heading */}
         <div>
-          <p style={{
-            fontFamily: 'Inter, sans-serif', fontSize: '10px',
-            letterSpacing: '4px', textTransform: 'uppercase',
-            color: gold, marginBottom: '18px', fontWeight: 500,
-          }}>
-            What We Offer
-          </p>
-          <h2 style={{
-            fontFamily: "'Cormorant Garamond', Georgia, serif",
-            fontSize: 'clamp(36px, 4vw, 52px)',
-            fontWeight: 500, color: navy,
-            lineHeight: 1.05, marginBottom: '18px',
-          }}>
-            Our Services
-          </h2>
-          <p style={{
-            fontFamily: 'Inter, sans-serif', fontSize: '13px',
-            color: '#666', fontWeight: 300, lineHeight: 1.7,
-            marginBottom: '26px', maxWidth: '260px',
-          }}>
-            From takeoff to touchdown, every detail is managed with precision so you can focus on what matters most.
-          </p>
-          <div style={{ width: '40px', height: '2px', backgroundColor: gold, marginBottom: '30px' }} />
+          <RiseUp>
+            <p style={{
+              fontFamily: 'Inter, sans-serif', fontSize: '10px',
+              letterSpacing: '4px', textTransform: 'uppercase',
+              color: gold, marginBottom: '18px', fontWeight: 500,
+            }}>
+              What We Offer
+            </p>
+            <h2 style={{
+              fontFamily: "'Cormorant Garamond', Georgia, serif",
+              fontSize: 'clamp(36px, 4vw, 52px)',
+              fontWeight: 500, color: navy,
+              lineHeight: 1.05, marginBottom: '18px',
+            }}>
+              Our Services
+            </h2>
+            <p style={{
+              fontFamily: 'Inter, sans-serif', fontSize: '13px',
+              color: '#666', fontWeight: 300, lineHeight: 1.7,
+              marginBottom: '26px', maxWidth: '260px',
+            }}>
+              From takeoff to touchdown, every detail is managed with precision so you can focus on what matters most.
+            </p>
+            <div style={{ width: '40px', height: '2px', backgroundColor: gold, marginBottom: '30px' }} />
+          </RiseUp>
           <button
             onClick={() => navigate('/#contact')}
             style={{
@@ -138,45 +141,47 @@ export default function ServicesSection() {
           gap: '0',
         }} className="services-inner-grid">
           {services.map((s, i) => (
-            <div key={s.num} style={{
-              display: 'flex', alignItems: 'flex-start', gap: '24px',
-              padding: '32px 24px',
-              borderTop: i >= 2 ? `1px solid ${navy}10` : 'none',
-              borderRight: i % 2 === 0 ? `1px solid ${navy}10` : 'none',
-              cursor: 'pointer',
-              transition: 'background 0.3s',
-            }}
-            onMouseEnter={e => e.currentTarget.style.background = 'rgba(184,148,79,0.05)'}
-            onMouseLeave={e => e.currentTarget.style.background = 'transparent'}>
-              <div style={{ color: gold, flexShrink: 0, marginTop: '4px' }}>
-                {s.icon}
+            <RiseUp key={s.num}>
+              <div style={{
+                display: 'flex', alignItems: 'flex-start', gap: '24px',
+                padding: '32px 24px',
+                borderTop: i >= 2 ? `1px solid ${navy}10` : 'none',
+                borderRight: i % 2 === 0 ? `1px solid ${navy}10` : 'none',
+                cursor: 'pointer',
+                transition: 'background 0.3s',
+              }}
+              onMouseEnter={e => e.currentTarget.style.background = 'rgba(184,148,79,0.05)'}
+              onMouseLeave={e => e.currentTarget.style.background = 'transparent'}>
+                <div style={{ color: gold, flexShrink: 0, marginTop: '4px' }}>
+                  {s.icon}
+                </div>
+                <div style={{ flex: 1 }}>
+                  <p style={{
+                    fontFamily: 'Inter, sans-serif', fontSize: '10px',
+                    letterSpacing: '2px', color: gold, marginBottom: '8px', fontWeight: 600,
+                  }}>
+                    {s.num}
+                  </p>
+                  <h3 style={{
+                    fontFamily: "'Cormorant Garamond', Georgia, serif",
+                    fontSize: '22px', fontWeight: 500,
+                    color: navy, marginBottom: '8px',
+                  }}>
+                    {s.title}
+                  </h3>
+                  <p style={{
+                    fontFamily: 'Inter, sans-serif', fontSize: '12px',
+                    color: '#666', fontWeight: 300, lineHeight: 1.6,
+                  }}>
+                    {s.desc}
+                  </p>
+                </div>
+                <span style={{
+                  color: `${navy}40`, fontSize: '16px', flexShrink: 0,
+                  transition: 'all 0.3s', alignSelf: 'center',
+                }}>→</span>
               </div>
-              <div style={{ flex: 1 }}>
-                <p style={{
-                  fontFamily: 'Inter, sans-serif', fontSize: '10px',
-                  letterSpacing: '2px', color: gold, marginBottom: '8px', fontWeight: 600,
-                }}>
-                  {s.num}
-                </p>
-                <h3 style={{
-                  fontFamily: "'Cormorant Garamond', Georgia, serif",
-                  fontSize: '22px', fontWeight: 500,
-                  color: navy, marginBottom: '8px',
-                }}>
-                  {s.title}
-                </h3>
-                <p style={{
-                  fontFamily: 'Inter, sans-serif', fontSize: '12px',
-                  color: '#666', fontWeight: 300, lineHeight: 1.6,
-                }}>
-                  {s.desc}
-                </p>
-              </div>
-              <span style={{
-                color: `${navy}40`, fontSize: '16px', flexShrink: 0,
-                transition: 'all 0.3s', alignSelf: 'center',
-              }}>→</span>
-            </div>
+            </RiseUp>
           ))}
         </div>
       </div>

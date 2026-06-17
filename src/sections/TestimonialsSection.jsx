@@ -5,6 +5,7 @@
    and the leaving ticket fades back in at the rear — all simultaneously. */
 
 import { useState, useEffect, useRef } from 'react'
+import RiseUp from '../components/RiseUp.jsx'
 
 const NAVY = '#1c2c4a'
 const GREY = '#8f8b84'
@@ -75,7 +76,7 @@ export default function TestimonialsSection() {
 
   return (
     <section style={{ background: CREAM, padding: '110px 5vw 130px' }}>
-      <div className="tk-stack">
+      <RiseUp className="tk-stack">
         {order.map((id, pos) => {
           let style, veil
           if (id === exiting) {
@@ -98,7 +99,7 @@ export default function TestimonialsSection() {
             </div>
           )
         })}
-      </div>
+      </RiseUp>
 
       <style>{`
         .tk-stack { position: relative; max-width: 1080px; margin: 0 auto; aspect-ratio: 1292 / 400; }

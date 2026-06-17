@@ -16,7 +16,7 @@ const socialLinks = [
 ]
 
 const col = { fontFamily: 'Inter, sans-serif', fontSize: '13px', letterSpacing: '5px', textTransform: 'uppercase', color: GOLD, fontWeight: 600, marginBottom: '18px', display: 'block' }
-const lnk = { fontFamily: 'Inter, sans-serif', fontSize: '14px', color: 'rgba(28,35,48,0.78)', textDecoration: 'none', display: 'block', marginBottom: '10px', letterSpacing: '0.3px', lineHeight: 1.5, transition: 'color 0.2s' }
+const lnk = { fontFamily: 'Inter, sans-serif', fontSize: '14px', color: 'rgba(28,35,48,0.78)', textDecoration: 'none', display: 'block', width: 'fit-content', maxWidth: '100%', marginBottom: '10px', letterSpacing: '0.3px', lineHeight: 1.5, transition: 'color 0.2s' }
 const over = (e) => { e.currentTarget.style.color = INK }
 const out = (e) => { e.currentTarget.style.color = 'rgba(28,35,48,0.78)' }
 
@@ -104,7 +104,7 @@ export default function Footer() {
         <div style={{ borderTop: '1px solid rgba(28,35,48,0.14)', padding: '18px 5vw' }}>
           <div className="flex flex-col md:flex-row items-center justify-between gap-3">
             <p style={{ fontFamily: 'Inter, sans-serif', fontSize: '11px', color: 'rgba(28,35,48,0.7)', letterSpacing: '0.3px' }}>
-              © 2024 LMT Jets — La Mondiale Tours LLC. All rights reserved.
+              © 2026 LMT Jets — La Mondiale Tours LLC. All rights reserved.
             </p>
             <div className="flex gap-6">
               {['Privacy Policy', 'Terms of Service'].map(t => (

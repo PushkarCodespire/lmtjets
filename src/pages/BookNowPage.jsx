@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect, useRef } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { fleet } from '../data/fleet.js'
 import QuoteForm from '../components/QuoteForm.jsx'
@@ -14,6 +14,13 @@ export default function BookNowPage() {
   const [date, setDate] = useState('')
   const [pax] = useState(1)
   const [sortBy, setSortBy] = useState('Recommended')
+  const [showForm, setShowForm] = useState(false)
+  const [formClosing, setFormClosing] = useState(false)
+
+  const closeForm = () => {
+    setFormClosing(true)
+    setTimeout(() => { setShowForm(false); setFormClosing(false) }, 600)
+  }
 
   // Filter fleet by passenger capacity, then sort
   const results = useMemo(() => {
@@ -65,14 +72,56 @@ export default function BookNowPage() {
           }}>
             Instant quotes. 90-minute confirmation.<br />Worldwide coverage.
           </p>
+          <button
+            onClick={() => setShowForm(true)}
+            style={{
+              background: gold, color: '#FFFFFF', border: 'none',
+              padding: '16px 44px', fontFamily: 'Inter, sans-serif', fontSize: '11px',
+              letterSpacing: '3px', textTransform: 'uppercase', fontWeight: 600,
+              cursor: 'pointer', borderRadius: '8px', transition: 'background 0.3s',
+            }}
+            onMouseEnter={e => e.currentTarget.style.background = '#A6833E'}
+            onMouseLeave={e => e.currentTarget.style.background = gold}
+          >
+            Request a Quote
+          </button>
         </div>
 
       </section>
 
-      {/* Quote form — top overlaps the hero, the rest flows below */}
-      <div className="quote-overlap">
-        <QuoteForm defaults={{ from, to, date, passengers: pax }} />
-      </div>
+      {/* ═══════════ FULLSCREEN QUOTE OVERLAY ═══════════ */}
+      {showForm && (
+        <div
+          className="quote-overlay"
+          style={{
+            position: 'fixed', inset: 0, zIndex: 999,
+            background: 'rgba(255,248,237,0.97)',
+            backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            overflowY: 'auto',
+            animation: formClosing
+              ? 'quoteSlideDown 0.6s cubic-bezier(0.7, 0, 0.84, 0) both'
+              : 'quoteSlideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) both',
+          }}
+        >
+          <button
+            onClick={closeForm}
+            aria-label="Close"
+            style={{
+              position: 'fixed', top: '28px', right: '32px', zIndex: 1000,
+              background: 'none', border: 'none', cursor: 'pointer',
+              color: navy, fontSize: '28px', lineHeight: 1,
+              width: '44px', height: '44px', display: 'grid', placeItems: 'center',
+              borderRadius: '50%', transition: 'background 0.2s',
+            }}
+            onMouseEnter={e => e.currentTarget.style.background = 'rgba(20,37,68,0.08)'}
+            onMouseLeave={e => e.currentTarget.style.background = 'none'}
+          >
+            ✕
+          </button>
+          <QuoteForm defaults={{ from, to, date, passengers: pax }} onClose={closeForm} />
+        </div>
+      )}
 
       {/* ═══════════ RESULTS ═══════════ */}
       <section id="results" style={{ backgroundColor: '#FFF8ED', padding: '64px 48px', maxWidth: '1400px', margin: '0 auto' }}>
@@ -133,9 +182,15 @@ export default function BookNowPage() {
       </section>
 
       <style>{`
-        .quote-overlap { position: relative; z-index: 5; margin-top: -130px; }
+        @keyframes quoteSlideUp {
+          from { transform: translateY(100%); }
+          to   { transform: translateY(0);    }
+        }
+        @keyframes quoteSlideDown {
+          from { transform: translateY(0);    }
+          to   { transform: translateY(100%); }
+        }
         @media (max-width: 700px) {
-          .quote-overlap { margin-top: -70px; }
           .ac-card { grid-template-columns: 1fr !important; }
           .ac-img { aspect-ratio: 16/9 !important; }
           .ac-specs { grid-template-columns: 1fr 1fr !important; }
@@ -179,6 +234,20 @@ function SearchField({ label, icon, children }) {
 }
 
 function AircraftCard({ aircraft, onClick }) {
+  const cardRef = useRef(null)
+  const [visible, setVisible] = useState(false)
+
+  useEffect(() => {
+    const el = cardRef.current
+    if (!el) return
+    const obs = new IntersectionObserver(
+      ([entry]) => setVisible(entry.isIntersecting),
+      { rootMargin: '0px 0px -80px 0px', threshold: 0.05 }
+    )
+    obs.observe(el)
+    return () => obs.disconnect()
+  }, [])
+
   const specs = [
     { icon: <PaxIcon size={16} />, value: `Up to ${aircraft.passengers}`, label: 'Passengers' },
     { icon: <RangeIcon />, value: `${aircraft.range.toLocaleString()} NM`, label: 'Range' },
@@ -188,13 +257,14 @@ function AircraftCard({ aircraft, onClick }) {
     { icon: <WifiIcon />, value: aircraft.wifiType || 'Wi-Fi', label: 'Connectivity' },
   ]
   return (
-    <div style={{
+    <div ref={cardRef} style={{
       background: '#FFFFFF',
       borderRadius: '8px', overflow: 'hidden',
       display: 'grid', gridTemplateColumns: '320px 1fr',
-      transition: 'all 0.3s',
+      transition: 'transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s',
       boxShadow: '0 2px 12px rgba(20,37,68,0.08)',
       cursor: 'pointer',
+      transform: visible ? 'translateY(0)' : 'translateY(60px)',
     }} className="ac-card"
       onClick={onClick}
       onMouseEnter={e => e.currentTarget.style.boxShadow = '0 8px 28px rgba(20,37,68,0.14)'}

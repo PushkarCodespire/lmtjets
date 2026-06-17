@@ -3,6 +3,8 @@
    cream → navy gradient at the bottom so it blends smoothly into the navy
    Fleet section instead of cutting hard. */
 
+import RiseUp from '../components/RiseUp.jsx'
+
 const NAVY = '#142544'
 const GOLD = '#B8944F'
 const CREAM = '#FFF8ED'
@@ -66,39 +68,43 @@ export default function WhyUsSection() {
       >
         {/* LEFT — heading + benefits + button */}
         <div>
-          <h2 style={{
-            fontFamily: 'Arial, sans-serif',
-            fontSize: 'clamp(30px, 3.3vw, 54px)',
-            fontWeight: 400, color: NAVY,
-            lineHeight: 1.05, letterSpacing: '0.02em',
-            textTransform: 'uppercase', margin: 0,
-          }}>
-            Why Fly With<br />LMT Jets?
-          </h2>
+          <RiseUp>
+            <h2 style={{
+              fontFamily: 'Arial, sans-serif',
+              fontSize: 'clamp(30px, 3.3vw, 54px)',
+              fontWeight: 400, color: NAVY,
+              lineHeight: 1.05, letterSpacing: '0.02em',
+              textTransform: 'uppercase', margin: 0,
+            }}>
+              Why Fly With<br />LMT Jets?
+            </h2>
 
-          <div style={{ width: '64px', height: '3px', backgroundColor: GOLD, margin: '18px 0 44px' }} />
+            <div style={{ width: '64px', height: '3px', backgroundColor: GOLD, margin: '18px 0 44px' }} />
+          </RiseUp>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '34px', marginBottom: '44px' }}>
             {benefits.map((b) => (
-              <div key={b.title} style={{ display: 'flex', alignItems: 'flex-start', gap: '26px' }}>
-                <span style={{ flexShrink: 0, marginTop: '2px', display: 'flex' }}>{b.icon}</span>
-                <div>
-                  <p style={{
-                    fontFamily: 'Inter, sans-serif', fontSize: '13px',
-                    fontWeight: 600, letterSpacing: '2.2px',
-                    textTransform: 'uppercase', color: NAVY, margin: '0 0 7px',
-                  }}>
-                    {b.title}
-                  </p>
-                  <p style={{
-                    fontFamily: 'Inter, sans-serif', fontSize: '15px',
-                    fontWeight: 300, color: '#666666', lineHeight: 1.55, margin: 0,
-                    maxWidth: '480px',
-                  }}>
-                    {b.desc}
-                  </p>
+              <RiseUp key={b.title}>
+                <div style={{ display: 'flex', alignItems: 'flex-start', gap: '26px' }}>
+                  <span style={{ flexShrink: 0, marginTop: '2px', display: 'flex' }}>{b.icon}</span>
+                  <div>
+                    <p style={{
+                      fontFamily: 'Inter, sans-serif', fontSize: '13px',
+                      fontWeight: 600, letterSpacing: '2.2px',
+                      textTransform: 'uppercase', color: NAVY, margin: '0 0 7px',
+                    }}>
+                      {b.title}
+                    </p>
+                    <p style={{
+                      fontFamily: 'Inter, sans-serif', fontSize: '15px',
+                      fontWeight: 300, color: '#666666', lineHeight: 1.55, margin: 0,
+                      maxWidth: '480px',
+                    }}>
+                      {b.desc}
+                    </p>
+                  </div>
                 </div>
-              </div>
+              </RiseUp>
             ))}
           </div>
 
@@ -118,13 +124,15 @@ export default function WhyUsSection() {
         </div>
 
         {/* RIGHT — rounded clouds image */}
-        <div style={{ borderRadius: '16px', overflow: 'hidden', aspectRatio: '7 / 5' }}>
-          <img
-            src="/why-clouds.png"
-            alt="Above the clouds"
-            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-          />
-        </div>
+        <RiseUp>
+          <div style={{ borderRadius: '16px', overflow: 'hidden', aspectRatio: '7 / 5' }}>
+            <img
+              src="/why-clouds.png"
+              alt="Above the clouds"
+              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+            />
+          </div>
+        </RiseUp>
       </div>
 
       <div className="why-spacer" style={{ height: '120px' }} />

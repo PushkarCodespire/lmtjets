@@ -5,6 +5,7 @@ import { useEffect, useRef } from 'react'
 import gsap from 'gsap'
 import Globe3D from '../components/Globe3D.jsx'
 import { routings } from '../data/routings.js'
+import RiseUp from '../components/RiseUp.jsx'
 
 // "Fly anywhere" rotator cycles the available empty-leg routings.
 const CITIES = routings.map((r) => `${r.from} → ${r.to}`)
@@ -46,7 +47,7 @@ export default function DestinationsSection() {
   return (
     <section id="destinations" className="dest">
       {/* ── Fly anywhere rotator ── */}
-      <div className="dest-row-wrap">
+      <RiseUp className="dest-row-wrap">
         <div className="dest-row">
           <span className="dest-label">Fly anywhere</span>
           <span className="dest-line" />
@@ -64,13 +65,13 @@ export default function DestinationsSection() {
             </div>
           </div>
         </div>
-      </div>
+      </RiseUp>
 
       {/* ── Globe + Global 8000 card ── */}
       <div className="dest-globe">
         <div className="dest-globe-img"><Globe3D /></div>
 
-        <div className="g8-card">
+        <RiseUp className="g8-card">
           <div className="g8-number">
             <span className="g8-global">Global</span>
             <span className="g8-big">8000.</span>
@@ -83,7 +84,7 @@ export default function DestinationsSection() {
             at the quietest cabin altitude in the category.
           </p>
           <button className="g8-btn" onClick={() => { window.location.href = '/book' }}>Book Now</button>
-        </div>
+        </RiseUp>
       </div>
 
       <style>{`
