@@ -10,7 +10,15 @@ const CREAM = '#FFF8ED'
 
 const ROWS = [
   {
-    label: 'Call us', value: '+1 (888) 929-2298', action: 'Call now', href: 'tel:+18889292298',
+    label: 'Call us (USA)', value: '+1 (888) 929-2298', action: 'Call now', href: 'tel:+18889292298',
+    icon: (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={NAVY} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92Z" />
+      </svg>
+    ),
+  },
+  {
+    label: 'Call us (France)', value: '+33 7 62 67 59 59', action: 'Call now', href: 'tel:+33762675959',
     icon: (
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={NAVY} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
         <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92Z" />
@@ -113,15 +121,33 @@ export default function ContactSection() {
             </RiseUp>
           ))}
 
-          {/* address */}
+          {/* addresses */}
           <div style={{ borderTop: '1px solid rgba(20,37,68,0.08)', paddingTop: '36px', marginTop: '4px' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '13px', marginBottom: '10px' }}>
-              <svg width="11" height="16" viewBox="0 0 24 24" fill={GOLD}>
+            <div style={{ display: 'flex', alignItems: 'flex-start', gap: '13px', marginBottom: '18px' }}>
+              <svg width="11" height="16" viewBox="0 0 24 24" fill={GOLD} style={{ flexShrink: 0, marginTop: '3px' }}>
                 <path d="M12 2a8 8 0 0 0-8 8c0 5.4 8 12 8 12s8-6.6 8-12a8 8 0 0 0-8-8Zm0 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6Z" />
               </svg>
-              <span style={{ fontFamily: 'Inter, sans-serif', fontSize: '14px', color: '#666666' }}>
-                120 Gazza Blvd, Farmingdale, NY 11735 — Republic Airport (FRG)
-              </span>
+              <div>
+                <span style={{ fontFamily: 'Inter, sans-serif', fontSize: '11px', fontWeight: 600, letterSpacing: '2px', textTransform: 'uppercase', color: NAVY, display: 'block', marginBottom: '4px' }}>
+                  New York, USA
+                </span>
+                <span style={{ fontFamily: 'Inter, sans-serif', fontSize: '14px', color: '#666666', display: 'block' }}>
+                  120 Gazza Blvd, Farmingdale, NY 11735 — Republic Airport (FRG)
+                </span>
+              </div>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'flex-start', gap: '13px', marginBottom: '18px' }}>
+              <svg width="11" height="16" viewBox="0 0 24 24" fill={GOLD} style={{ flexShrink: 0, marginTop: '3px' }}>
+                <path d="M12 2a8 8 0 0 0-8 8c0 5.4 8 12 8 12s8-6.6 8-12a8 8 0 0 0-8-8Zm0 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6Z" />
+              </svg>
+              <div>
+                <span style={{ fontFamily: 'Inter, sans-serif', fontSize: '11px', fontWeight: 600, letterSpacing: '2px', textTransform: 'uppercase', color: NAVY, display: 'block', marginBottom: '4px' }}>
+                  France, Europe
+                </span>
+                <span style={{ fontFamily: 'Inter, sans-serif', fontSize: '14px', color: '#666666', display: 'block' }}>
+                  25 Rue Victor Hugo, 94220 Charenton-le-Pont, France
+                </span>
+              </div>
             </div>
             <span style={{ fontFamily: 'Inter, sans-serif', fontSize: '14px', color: '#666666', paddingLeft: '24px' }}>
               info@lmtjets.com

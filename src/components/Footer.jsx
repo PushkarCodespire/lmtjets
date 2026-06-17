@@ -11,8 +11,6 @@ const socialLinks = [
   { label: 'Facebook',  href: 'https://www.facebook.com',  icon: <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg> },
   { label: 'Instagram', href: 'https://www.instagram.com', icon: <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/></svg> },
   { label: 'LinkedIn',  href: 'https://www.linkedin.com',  icon: <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg> },
-  { label: 'X',         href: 'https://x.com',            icon: <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg> },
-  { label: 'YouTube',   href: 'https://www.youtube.com',  icon: <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 001.46 6.42 29 29 0 001 12a29 29 0 00.46 5.58 2.78 2.78 0 001.95 1.95C5.12 20 12 20 12 20s6.88 0 8.59-.47a2.78 2.78 0 001.95-1.95A29 29 0 0023 12a29 29 0 00-.46-5.58z"/></svg> },
 ]
 
 const col = { fontFamily: 'Inter, sans-serif', fontSize: '13px', letterSpacing: '5px', textTransform: 'uppercase', color: GOLD, fontWeight: 600, marginBottom: '18px', display: 'block' }
@@ -38,7 +36,7 @@ export default function Footer() {
       {/* ── content ── */}
       <div style={{ position: 'relative', zIndex: 1 }}>
         <div style={{ padding: '72px 5vw 48px' }}>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+          <div className="footer-grid grid grid-cols-1 md:grid-cols-4 gap-12">
 
             {/* COL 1 — Logo + tagline + social */}
             <div>
@@ -74,15 +72,24 @@ export default function Footer() {
               ))}
             </div>
 
-            {/* COL 3 — Contact + badges */}
+            {/* COL 3 — New York + France */}
             <div>
-              <span style={col}>Contact</span>
+              <span style={col}>New York, USA</span>
               <a href="tel:+18889292298" style={lnk} onMouseEnter={over} onMouseLeave={out}>+1 (888) 929-2298</a>
               <a href="https://wa.me/16464200679" style={lnk} onMouseEnter={over} onMouseLeave={out}>WA: +1 (646) 420-0679</a>
-              <a href="mailto:info@lmtjets.com" style={lnk} onMouseEnter={over} onMouseLeave={out}>info@lmtjets.com</a>
               <span style={lnk}>120 Gazza Blvd, Farmingdale, NY 11735</span>
 
-              <div className="flex gap-6 mt-6">
+              <span style={{ ...col, marginTop: '24px' }}>France, Europe</span>
+              <a href="tel:+33762675959" style={lnk} onMouseEnter={over} onMouseLeave={out}>+33 7 62 67 59 59</a>
+              <span style={lnk}>25 Rue Victor Hugo, 94220 Charenton-le-Pont</span>
+            </div>
+
+            {/* COL 4 — Email + badges */}
+            <div>
+              <span style={col}>Email</span>
+              <a href="mailto:info@lmtjets.com" style={lnk} onMouseEnter={over} onMouseLeave={out}>info@lmtjets.com</a>
+
+              <div className="flex gap-6" style={{ marginTop: '36px' }}>
                 <div className="flex flex-col items-center gap-2">
                   <div className="flex items-center justify-center rounded-full" style={{ width: '40px', height: '40px', border: '1px solid rgba(184,148,79,0.6)' }}>
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={GOLD} strokeWidth="1.3" strokeLinecap="round"><path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z"/></svg>
@@ -119,8 +126,11 @@ export default function Footer() {
         </div>
       </div>
       <style>{`
+        @media (max-width: 900px) {
+          .footer-grid { grid-template-columns: 1fr 1fr !important; }
+        }
         @media (max-width: 640px) {
-          .site-footer .grid { gap: 36px !important; }
+          .footer-grid { grid-template-columns: 1fr !important; gap: 36px !important; }
           .site-footer > div > div:first-child { padding: 48px 5vw 36px !important; }
         }
       `}</style>
