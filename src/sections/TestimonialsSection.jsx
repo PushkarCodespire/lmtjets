@@ -11,7 +11,6 @@ const NAVY = '#1c2c4a'
 const GREY = '#8f8b84'
 const GOLD = '#D2A567'
 const CREAM = '#FFF8ED'
-const PHOTO = '/amkitimage.png'
 
 const ROT = [0, 2.6, -2.6, 4]
 const TX = [0, 18, -18, 28]
@@ -33,7 +32,9 @@ function Ticket({ data, veil }) {
   return (
     <div className="tk">
       <div className="tk-left">
-        <div className="tk-photo"><img src={PHOTO} alt={data.name} /></div>
+        <div className="tk-logo-wrap">
+          <img src="/lmtlogo.svg" alt="LMT Jets" className="tk-logo" />
+        </div>
         <div className="tk-name">{data.name}</div>
         <div className="tk-loc">{data.location}</div>
       </div>
@@ -133,11 +134,12 @@ export default function TestimonialsSection() {
           flex: 0 0 30%; display: flex; flex-direction: column;
           align-items: center; justify-content: center; padding: 5%; text-align: center;
         }
-        .tk-photo {
-          width: 52%; aspect-ratio: 176 / 211; border: 1.5px solid rgba(255,255,255,0.9);
-          border-radius: clamp(20px, 2.6vw, 44px); overflow: hidden; margin-bottom: 8%;
+        .tk-logo-wrap {
+          position: absolute; top: 14px; left: 14px; z-index: 10;
+          background: #fff; border-radius: 7px; padding: 5px 10px;
+          display: inline-flex; align-items: center;
         }
-        .tk-photo img { width: 100%; height: 100%; object-fit: cover; }
+        .tk-logo { height: clamp(18px, 2vw, 28px); width: auto; display: block; }
         .tk-name { font-family: Arial, sans-serif; color: #fff; font-size: clamp(15px, 2vw, 27px); line-height: 1.15; }
         .tk-loc { font-family: Inter, sans-serif; color: rgba(255,255,255,0.6); font-size: clamp(11px, 1.15vw, 16px); margin-top: 7px; }
 
@@ -159,7 +161,6 @@ export default function TestimonialsSection() {
           .tk-stack { aspect-ratio: 1292 / 480; }
           .tk { --zig: 14px; --zigw: 8px; border-radius: 10px; }
           .tk-left { flex: 0 0 28%; padding: 4%; }
-          .tk-photo { width: 48%; border-radius: 14px; }
           .tk-name { font-size: clamp(11px, 3vw, 16px) !important; }
           .tk-loc { font-size: clamp(9px, 2.2vw, 12px) !important; margin-top: 4px !important; }
           .tk-stars { font-size: clamp(9px, 2vw, 12px) !important; letter-spacing: 2px; margin-bottom: 4%; }
