@@ -12,7 +12,7 @@ const gold = '#B8944F'
 // Brevo send: verified sender → destination inbox for quote requests.
 const SENDER_EMAIL = 'kasapu@codespiresolutions.com'
 const SENDER_NAME = 'LMT Jets Website'
-const TARGET_EMAIL = 'info@lmtjets.com'
+const TARGET_EMAIL = 'sagarkasapu2003@gmail.com'
 
 const labelStyle = {
   fontFamily: 'Inter, sans-serif', fontSize: '9px', letterSpacing: '1.5px',
