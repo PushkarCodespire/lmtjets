@@ -2,16 +2,10 @@
    Cream base with a faint clouds layer and a runway image at the bottom; the
    footer content sits transparent on top with dark text and gold headings. */
 
-import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 const GOLD = '#D2A567'
 const INK = '#1C2330'
-
-const socialLinks = [
-  { label: 'Facebook',  href: 'https://www.facebook.com',  icon: <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg> },
-  { label: 'Instagram', href: 'https://www.instagram.com', icon: <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/></svg> },
-  { label: 'LinkedIn',  href: 'https://www.linkedin.com',  icon: <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg> },
-]
 
 const col = { fontFamily: 'Inter, sans-serif', fontSize: '13px', letterSpacing: '5px', textTransform: 'uppercase', color: GOLD, fontWeight: 600, marginBottom: '18px', display: 'block' }
 const lnk = { fontFamily: 'Inter, sans-serif', fontSize: '14px', color: 'rgba(28,35,48,0.78)', textDecoration: 'none', display: 'block', width: 'fit-content', maxWidth: '100%', marginBottom: '10px', letterSpacing: '0.3px', lineHeight: 1.5, transition: 'color 0.2s' }
@@ -19,6 +13,23 @@ const over = (e) => { e.currentTarget.style.color = INK }
 const out = (e) => { e.currentTarget.style.color = 'rgba(28,35,48,0.78)' }
 
 export default function Footer() {
+  const navigate = useNavigate()
+  // Smart nav: hash links scroll to the section (navigating home first if needed);
+  // plain paths route normally. Mirrors the navbar behaviour.
+  const go = (to) => (e) => {
+    e.preventDefault()
+    if (to.startsWith('/#')) {
+      const id = to.slice(2)
+      if (window.location.pathname !== '/') {
+        navigate('/')
+        setTimeout(() => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' }), 300)
+      } else {
+        document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
+      }
+    } else {
+      navigate(to)
+    }
+  }
   return (
     <footer className="site-footer" style={{ position: 'relative', overflow: 'hidden', background: '#FFF8ED', color: INK }}>
       {/* ── background layers ── */}
@@ -44,31 +55,19 @@ export default function Footer() {
               <p style={{ fontFamily: 'Inter, sans-serif', fontSize: '14px', color: 'rgba(28,35,48,0.7)', lineHeight: 1.6, maxWidth: '230px', marginBottom: '24px' }}>
                 Private aviation designed around your schedule, your standards, and your destinations.
               </p>
-              <div className="flex items-center gap-2.5">
-                {socialLinks.map(({ label, href, icon }) => (
-                  <a key={label} href={href} target="_blank" rel="noreferrer" aria-label={label}
-                    className="flex items-center justify-center rounded-full transition-all duration-200"
-                    style={{ width: '30px', height: '30px', border: '1px solid rgba(28,35,48,0.18)', color: 'rgba(28,35,48,0.55)', textDecoration: 'none' }}
-                    onMouseEnter={e => { e.currentTarget.style.borderColor = GOLD; e.currentTarget.style.color = GOLD }}
-                    onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(28,35,48,0.18)'; e.currentTarget.style.color = 'rgba(28,35,48,0.55)' }}
-                  >
-                    {icon}
-                  </a>
-                ))}
-              </div>
             </div>
 
             {/* COL 2 — Quick Links */}
             <div>
               <span style={col}>Quick Links</span>
               {[
-                { label: 'Fleet',         to: '/#fleet' },
+                { label: 'Fleet',         to: '/book' },
                 { label: 'Why LMT',       to: '/#why-us' },
                 { label: 'Services',      to: '/#services' },
                 { label: 'Book a Flight', to: '/book' },
                 { label: 'Contact Us',    to: '/#contact' },
               ].map(({ label, to }) => (
-                <Link key={label} to={to} style={lnk} onMouseEnter={over} onMouseLeave={out}>{label}</Link>
+                <a key={label} href={to} onClick={go(to)} style={lnk} onMouseEnter={over} onMouseLeave={out}>{label}</a>
               ))}
             </div>
 
