@@ -6,7 +6,7 @@ import tailwindcss from '@tailwindcss/vite'
 // Vercel Environment Variable in production). Never hardcoded / committed.
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
-  const BREVO_API_KEY = env.BREVO_API_KEY || ''
+  const BREVO_API_KEY = (env.BREVO_API_KEY || '').trim()
 
   return {
     plugins: [react(), tailwindcss()],

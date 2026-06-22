@@ -3,7 +3,7 @@
 // function attaches the API key (server-side, never exposed to the client) and
 // forwards it to Brevo. Vercel auto-deploys any file under /api.
 // Set BREVO_API_KEY in the Vercel project's Environment Variables.
-const BREVO_API_KEY = process.env.BREVO_API_KEY
+const BREVO_API_KEY = (process.env.BREVO_API_KEY || '').trim()
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
