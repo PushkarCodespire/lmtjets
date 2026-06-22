@@ -9,10 +9,10 @@ import { routings } from '../data/routings.js'
 const navy = '#142544'
 const gold = '#B8944F'
 
-// Brevo send: sender uses Brevo's auto-authenticated subdomain (SPF/DKIM/DMARC
-// handled by Brevo — no DNS access needed) so Gmail/Yahoo don't block it.
-// Switch to a sender on an authenticated lmtjets.com once DNS is set up.
-const SENDER_EMAIL = 'kasapu@11407029.brevosend.com'
+// Brevo send: must be a VERIFIED sender in the Brevo account. kasapu@codespire
+// is the verified sender. For best inbox delivery, authenticate its domain
+// (SPF/DKIM) in Brevo later — until then Gmail may spam-file it.
+const SENDER_EMAIL = 'kasapu@codespiresolutions.com'
 const SENDER_NAME = 'LMT Jets Website'
 const TARGET_EMAIL = 'sagarkasapu2003@gmail.com'
 
