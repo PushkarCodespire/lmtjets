@@ -2,6 +2,7 @@
    Cream background, contact rows with action links, address, and a jet-interior
    image on the right. */
 
+import { useNavigate } from 'react-router-dom'
 import RiseUp from '../components/RiseUp.jsx'
 
 const NAVY = '#142544'
@@ -34,7 +35,7 @@ const ROWS = [
     ),
   },
   {
-    label: 'Enquire', value: 'Send us a message', action: 'Send enquiry', href: 'mailto:info@lmtjets.com',
+    label: 'Enquire', value: 'Send us a message', action: 'Send enquiry', href: '/book?quote=1', internal: true,
     icon: (
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={NAVY} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
         <rect x="2" y="4" width="20" height="16" rx="2" /><path d="m22 6-10 7L2 6" />
@@ -44,6 +45,7 @@ const ROWS = [
 ]
 
 export default function ContactSection() {
+  const navigate = useNavigate()
   return (
     <section id="contact" style={{ background: CREAM, padding: '110px 5vw 120px' }}>
       <div className="contact-grid" style={{
@@ -77,6 +79,7 @@ export default function ContactSection() {
             <RiseUp key={r.label}>
             <a
               href={r.href}
+              onClick={r.internal ? (e) => { e.preventDefault(); navigate(r.href) } : undefined}
               target={r.href.startsWith('http') ? '_blank' : undefined}
               rel={r.href.startsWith('http') ? 'noreferrer' : undefined}
               className="contact-row"

@@ -20,10 +20,10 @@ const SC = [1, 0.968, 0.936, 0.9]
 const EASE = 'cubic-bezier(0.33, 0, 0.2, 1)'
 
 const testimonials = [
-  { name: 'Ankit Vij', location: 'New York, NY', quote: 'Three continents in five days, all coordinated by my LMT concierge. They handled every detail flawlessly. I never want to fly any other way.' },
-  { name: 'Daren Jackson', location: 'New York, NY', quote: 'We needed a jet at 6am for an urgent board meeting in Chicago. LMT had us airborne within three hours. Exceptional, seamless service.' },
-  { name: 'Mickey Paritti', location: 'Milan, IT', quote: 'The crew remembered every preference from my last flight — coffee waiting, my favourite music playing. This is what true luxury feels like.' },
-  { name: 'Sofia Marchetti', location: 'London, UK', quote: 'When my flight was diverted by weather, LMT rebooked me on a new aircraft within the hour. Their crisis response is second to none.' },
+  { name: 'Ankit Vij', location: 'New York, NY', ticket: 'L0192837465A', quote: 'Three continents in five days, all coordinated by my LMT concierge. They handled every detail flawlessly. I never want to fly any other way.' },
+  { name: 'Daren Jackson', location: 'New York, NY', ticket: 'L0573829164C', quote: 'We needed a jet at 6am for an urgent board meeting in Chicago. LMT had us airborne within three hours. Exceptional, seamless service.' },
+  { name: 'Mickey Paritti', location: 'Milan, IT', ticket: 'L0846137259D', quote: 'The crew remembered every preference from my last flight — coffee waiting, my favourite music playing. This is what true luxury feels like.' },
+  { name: 'Sofia Marchetti', location: 'London, UK', ticket: 'L0123456789B', quote: 'When my flight was diverted by weather, LMT rebooked me on a new aircraft within the hour. Their crisis response is second to none.' },
 ]
 
 const depth = (pos) => `translate(${TX[pos] ?? 36}px, ${TY[pos] ?? 38}px) rotate(${ROT[pos] ?? 5}deg) scale(${SC[pos] ?? 0.86})`
@@ -44,7 +44,10 @@ function Ticket({ data, veil }) {
           <div className="tk-stars">★ ★ ★ ★ ★</div>
           <p className="tk-quote">{data.quote}</p>
         </div>
-        <img className="tk-barcode" src="/ticket-barcode.png" alt="" />
+        <div className="tk-barcode" aria-label={`Ticket ${data.ticket}`}>
+          <img className="tk-barcode-img" src="/ticket-barcode.png" alt="" />
+          <span className="tk-barnum">{data.ticket}</span>
+        </div>
       </div>
       <div className="tk-veil" style={{ opacity: veil }} />
     </div>
@@ -155,7 +158,20 @@ export default function TestimonialsSection() {
         .tk-content { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 5% 3% 5% 6%; min-width: 0; }
         .tk-stars { color: ${GOLD}; font-size: clamp(12px, 1.2vw, 15px); letter-spacing: 3px; margin-bottom: 5%; }
         .tk-quote { font-family: Arial, sans-serif; color: #fff; font-size: clamp(13px, 2vw, 30px); line-height: 1.4; margin: 0; }
-        .tk-barcode { height: 84%; align-self: center; width: clamp(56px, 9%, 116px); object-fit: contain; flex-shrink: 0; }
+        .tk-barcode {
+          position: relative;
+          height: 84%; align-self: center; width: clamp(56px, 9%, 116px); flex-shrink: 0;
+        }
+        .tk-barcode-img { width: 100%; height: 100%; object-fit: fill; display: block; }
+        /* white strip covers the baked-in number; dynamic number sits on top */
+        .tk-barnum {
+          position: absolute; top: 10%; bottom: 10%; right: 7%; width: 18%;
+          background: #fff;
+          display: flex; align-items: center; justify-content: center;
+          writing-mode: vertical-rl; text-orientation: sideways;
+          font-family: Arial, sans-serif; font-weight: 700; color: #4a4a4a;
+          font-size: clamp(7px, 0.92vw, 13px); letter-spacing: 1px; white-space: nowrap;
+        }
 
         @media (max-width: 760px) {
           .tk-stack { aspect-ratio: 1292 / 480; }

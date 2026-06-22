@@ -1,5 +1,6 @@
-/* QuoteForm — "Request a Quote" inquiry form. On submit it opens the visitor's
-   email client with all details pre-filled, addressed to the LMT inbox. */
+/* QuoteForm — "Request a Quote" inquiry form. On submit it emails the details
+   via Brevo (through the Vite dev proxy at /api/brevo/send, which injects the
+   API key server-side). Replies route back to the visitor. */
 
 import { useState } from 'react'
 import { fleet } from '../data/fleet.js'
@@ -8,8 +9,10 @@ import { routings } from '../data/routings.js'
 const navy = '#142544'
 const gold = '#B8944F'
 
-// Target inbox for quote requests.
-const TARGET_EMAIL = 'pushkar@codespiresolutions.com'
+// Brevo send: verified sender → destination inbox for quote requests.
+const SENDER_EMAIL = 'kasapu@codespiresolutions.com'
+const SENDER_NAME = 'LMT Jets Website'
+const TARGET_EMAIL = 'info@lmtjets.com'
 
 const labelStyle = {
   fontFamily: 'Inter, sans-serif', fontSize: '9px', letterSpacing: '1.5px',
@@ -35,37 +38,62 @@ export default function QuoteForm({ defaults = {}, onClose }) {
     from: defaults.from || '', to: defaults.to || '',
     depart: defaults.date || '', returnDate: '',
     passengers: defaults.passengers || 1,
-    aircraft: '', message: '',
+    aircraft: defaults.aircraft || '', message: '',
   })
-  const [sent, setSent] = useState(false)
+  // status: 'idle' | 'sending' | 'sent' | 'error'
+  const [status, setStatus] = useState('idle')
 
   const set = (k) => (e) => setForm(f => ({ ...f, [k]: e.target.value }))
   const routeIdx = routings.findIndex(r => r.from === form.from && r.to === form.to)
   const roundTrip = form.tripType === 'Round-trip'
 
-  const submit = (e) => {
+  const submit = async (e) => {
     e.preventDefault()
+    if (status === 'sending') return
+    setStatus('sending')
+
     const subject = `Private Jet Quote Request — ${form.from || 'TBD'} to ${form.to || 'TBD'}`
-    const lines = [
-      `Name: ${form.name}`,
-      `Email: ${form.email}`,
-      `Phone: ${form.phone || '—'}`,
-      '',
-      `Trip Type: ${form.tripType}`,
-      `From: ${form.from || '—'}`,
-      `To: ${form.to || '—'}`,
-      `Departure Date: ${form.depart || '—'}`,
-      ...(roundTrip ? [`Return Date: ${form.returnDate || '—'}`] : []),
-      `Passengers: ${form.passengers}`,
-      `Aircraft Preference: ${form.aircraft || 'No preference'}`,
-      '',
-      'Message:',
-      form.message || '(none)',
+    const rows = [
+      ['Name', form.name],
+      ['Email', form.email],
+      ['Phone', form.phone || '—'],
+      ['Trip Type', form.tripType],
+      ['From', form.from || '—'],
+      ['To', form.to || '—'],
+      ['Departure Date', form.depart || '—'],
+      ...(roundTrip ? [['Return Date', form.returnDate || '—']] : []),
+      ['Passengers', String(form.passengers)],
+      ['Aircraft Preference', form.aircraft || 'No preference'],
+      ['Message', form.message || '(none)'],
     ]
-    window.location.href =
-      `mailto:${TARGET_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(lines.join('\n'))}`
-    setSent(true)
-    if (onClose) onClose()
+    const esc = (s) => String(s).replace(/[<>&]/g, c => ({ '<': '&lt;', '>': '&gt;', '&': '&amp;' }[c]))
+    const htmlContent =
+      `<h2 style="font-family:Arial,sans-serif;color:#142544">New Quote Request</h2>` +
+      `<table style="font-family:Arial,sans-serif;font-size:14px;color:#333;border-collapse:collapse">` +
+      rows.map(([k, v]) =>
+        `<tr><td style="padding:6px 16px 6px 0;color:#888;vertical-align:top">${k}</td>` +
+        `<td style="padding:6px 0"><strong>${esc(v)}</strong></td></tr>`).join('') +
+      `</table>`
+
+    try {
+      const res = await fetch('/api/brevo/send', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json', accept: 'application/json' },
+        body: JSON.stringify({
+          sender: { name: SENDER_NAME, email: SENDER_EMAIL },
+          to: [{ email: TARGET_EMAIL }],
+          ...(form.email ? { replyTo: { email: form.email, name: form.name || form.email } } : {}),
+          subject,
+          htmlContent,
+        }),
+      })
+      if (!res.ok) throw new Error(`Brevo responded ${res.status}`)
+      setStatus('sent')
+      setTimeout(() => { if (onClose) onClose() }, 1800)
+    } catch (err) {
+      console.error('Quote send failed:', err)
+      setStatus('error')
+    }
   }
 
   return (
@@ -148,19 +176,26 @@ export default function QuoteForm({ defaults = {}, onClose }) {
         </div>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '16px', flexWrap: 'wrap', marginTop: '20px' }}>
-          <button type="submit" style={{
-            background: gold, color: '#FFFFFF', border: 'none',
+          <button type="submit" disabled={status === 'sending' || status === 'sent'} style={{
+            background: status === 'sending' || status === 'sent' ? '#C9B790' : gold,
+            color: '#FFFFFF', border: 'none',
             padding: '12px 32px', fontFamily: 'Inter, sans-serif', fontSize: '11px',
             letterSpacing: '2px', textTransform: 'uppercase', fontWeight: 600,
-            cursor: 'pointer', borderRadius: '8px', transition: 'background 0.3s',
+            cursor: status === 'sending' || status === 'sent' ? 'default' : 'pointer',
+            borderRadius: '8px', transition: 'background 0.3s',
           }}
-            onMouseEnter={e => e.currentTarget.style.background = '#A6833E'}
-            onMouseLeave={e => e.currentTarget.style.background = gold}>
-            Send Request →
+            onMouseEnter={e => { if (status === 'idle' || status === 'error') e.currentTarget.style.background = '#A6833E' }}
+            onMouseLeave={e => { if (status === 'idle' || status === 'error') e.currentTarget.style.background = gold }}>
+            {status === 'sending' ? 'Sending…' : status === 'sent' ? 'Sent ✓' : 'Send Request →'}
           </button>
-          {sent && (
+          {status === 'sent' && (
             <span style={{ fontFamily: 'Inter, sans-serif', fontSize: '12px', color: navy }}>
-              Your email app should now open — just hit send.
+              Thank you — your request has been sent. We'll reply shortly.
+            </span>
+          )}
+          {status === 'error' && (
+            <span style={{ fontFamily: 'Inter, sans-serif', fontSize: '12px', color: '#B00020' }}>
+              Sorry, something went wrong sending your request. Please try again or email {TARGET_EMAIL}.
             </span>
           )}
         </div>

@@ -14,8 +14,12 @@ export default function BookNowPage() {
   const [date, setDate] = useState('')
   const [pax] = useState(1)
   const [sortBy, setSortBy] = useState('Recommended')
-  const [showForm, setShowForm] = useState(false)
+  const [showForm, setShowForm] = useState(params.get('quote') === '1')
   const [formClosing, setFormClosing] = useState(false)
+
+  // Aircraft can be deep-linked by id (e.g. from the Fleet Detail page); map it
+  // to the name the QuoteForm's select expects so it pre-selects correctly.
+  const aircraftName = fleet.find(a => a.id === params.get('aircraft'))?.name || ''
 
   const closeForm = () => {
     setFormClosing(true)
@@ -119,7 +123,7 @@ export default function BookNowPage() {
           >
             ✕
           </button>
-          <QuoteForm defaults={{ from, to, date, passengers: pax }} onClose={closeForm} />
+          <QuoteForm defaults={{ from, to, date, passengers: pax, aircraft: aircraftName }} onClose={closeForm} />
         </div>
       )}
 

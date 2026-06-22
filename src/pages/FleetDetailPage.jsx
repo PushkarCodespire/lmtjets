@@ -95,7 +95,7 @@ export default function FleetDetailPage() {
             <button onClick={() => navigate(`/book?aircraft=${aircraft.id}`)} style={{ fontFamily: 'Inter', fontSize: '10px', letterSpacing: '2.5px', textTransform: 'uppercase', fontWeight: 600, background: gold, color: navy, border: 'none', padding: '14px 28px', cursor: 'pointer' }}>
               Book This Aircraft
             </button>
-            <button onClick={() => navigate('/#contact')} style={{ fontFamily: 'Inter', fontSize: '10px', letterSpacing: '2.5px', textTransform: 'uppercase', fontWeight: 500, background: 'transparent', color: '#FFFFFF', border: '1px solid rgba(255,255,255,0.40)', padding: '14px 28px', cursor: 'pointer' }}>
+            <button onClick={() => navigate(`/book?aircraft=${aircraft.id}&quote=1`)} style={{ fontFamily: 'Inter', fontSize: '10px', letterSpacing: '2.5px', textTransform: 'uppercase', fontWeight: 500, background: 'transparent', color: '#FFFFFF', border: '1px solid rgba(255,255,255,0.40)', padding: '14px 28px', cursor: 'pointer' }}>
               Request Quote
             </button>
           </div>
@@ -116,7 +116,7 @@ export default function FleetDetailPage() {
             <p style={{ fontFamily: 'Inter', fontSize: '14px', fontWeight: 300, color: '#555', lineHeight: 1.75, marginBottom: '32px' }}>
               {aircraft.storyDesc}
             </p>
-            <a onClick={() => navigate('/#contact')} style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', fontFamily: 'Inter', fontSize: '10px', letterSpacing: '2.5px', textTransform: 'uppercase', color: gold, cursor: 'pointer', textDecoration: 'none' }}>
+            <a onClick={() => navigate(`/book?aircraft=${aircraft.id}&quote=1`)} style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', fontFamily: 'Inter', fontSize: '10px', letterSpacing: '2.5px', textTransform: 'uppercase', color: gold, cursor: 'pointer', textDecoration: 'none' }}>
               Inquire Now →
             </a>
           </div>
