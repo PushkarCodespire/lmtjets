@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, useLocation } from 'react-router-dom'
 import Lenis from 'lenis'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -11,6 +11,17 @@ import BookNowPage from './pages/BookNowPage.jsx'
 import AnimatedLogo from './components/AnimatedLogo.jsx'
 
 gsap.registerPlugin(ScrollTrigger)
+
+// Scroll to top on every route (pathname) change — hash navigations are left
+// alone so in-page anchor scrolling still works.
+function ScrollToTop() {
+  const { pathname } = useLocation()
+  useEffect(() => {
+    if (window.__lenis) window.__lenis.scrollTo(0, { immediate: true })
+    else window.scrollTo(0, 0)
+  }, [pathname])
+  return null
+}
 
 function App() {
   const [splashDone, setSplashDone] = useState(false)
@@ -63,6 +74,7 @@ function App() {
         </div>
       )}
       <Navbar />
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/fleet/:id" element={<FleetDetailPage />} />
