@@ -28,6 +28,10 @@ export default function Footer() {
       }
     } else {
       navigate(to)
+      // Force top even when navigating to the page we're already on
+      // (ScrollToTop only reacts to pathname changes).
+      if (window.__lenis) window.__lenis.scrollTo(0, { immediate: true })
+      else window.scrollTo(0, 0)
     }
   }
   return (
