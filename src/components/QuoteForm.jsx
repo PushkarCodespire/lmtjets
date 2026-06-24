@@ -4,7 +4,6 @@
 
 import { useState } from 'react'
 import { fleet } from '../data/fleet.js'
-import { routings } from '../data/routings.js'
 
 const navy = '#142544'
 const gold = '#B8944F'
@@ -46,7 +45,6 @@ export default function QuoteForm({ defaults = {}, onClose }) {
   const [status, setStatus] = useState('idle')
 
   const set = (k) => (e) => setForm(f => ({ ...f, [k]: e.target.value }))
-  const routeIdx = routings.findIndex(r => r.from === form.from && r.to === form.to)
   const roundTrip = form.tripType === 'Round-trip'
 
   const submit = async (e) => {
@@ -132,28 +130,12 @@ export default function QuoteForm({ defaults = {}, onClose }) {
             </select>
           </div>
           <div>
-            <label style={labelStyle}>From → To</label>
-            <select
-              style={selectStyle}
-              value={routeIdx === -1 ? '' : String(routeIdx)}
-              onChange={(e) => {
-                const v = e.target.value
-                const r = v === '' ? { from: '', to: '' } : routings[Number(v)]
-                setForm(f => ({ ...f, from: r.from, to: r.to }))
-              }}
-            >
-              <option value="">Select a route…</option>
-              {routings.map((r, i) => (
-                <option key={`${r.from}-${r.to}-${i}`} value={i}>{r.from} → {r.to}</option>
-              ))}
-            </select>
+            <label style={labelStyle}>From</label>
+            <input style={fieldStyle} type="text" value={form.from} onChange={set('from')} placeholder="New York" />
           </div>
           <div>
-            <label style={labelStyle}>Aircraft</label>
-            <select style={selectStyle} value={form.aircraft} onChange={set('aircraft')}>
-              <option value="">No preference</option>
-              {fleet.map(a => <option key={a.id} value={a.name}>{a.name}</option>)}
-            </select>
+            <label style={labelStyle}>To</label>
+            <input style={fieldStyle} type="text" value={form.to} onChange={set('to')} placeholder="London" />
           </div>
           <div>
             <label style={labelStyle}>Departure</label>
@@ -169,6 +151,13 @@ export default function QuoteForm({ defaults = {}, onClose }) {
             <label style={labelStyle}>Passengers</label>
             <select style={selectStyle} value={form.passengers} onChange={set('passengers')}>
               {Array.from({ length: 19 }, (_, i) => i + 1).map(n => <option key={n} value={n}>{n}</option>)}
+            </select>
+          </div>
+          <div>
+            <label style={labelStyle}>Aircraft</label>
+            <select style={selectStyle} value={form.aircraft} onChange={set('aircraft')}>
+              <option value="">No preference</option>
+              {fleet.map(a => <option key={a.id} value={a.name}>{a.name}</option>)}
             </select>
           </div>
           <div style={{ gridColumn: '1 / -1' }}>

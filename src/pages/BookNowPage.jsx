@@ -1,5 +1,5 @@
 import { useState, useMemo, useEffect, useRef } from 'react'
-import { useNavigate, useSearchParams } from 'react-router-dom'
+import { useSearchParams } from 'react-router-dom'
 import { fleet } from '../data/fleet.js'
 import QuoteForm from '../components/QuoteForm.jsx'
 
@@ -7,7 +7,6 @@ const navy = '#142544'
 const gold = '#B8944F'
 
 export default function BookNowPage() {
-  const navigate = useNavigate()
   const [params] = useSearchParams()
   const [from, setFrom] = useState(params.get('from') || '')
   const [to, setTo] = useState(params.get('to') || '')
@@ -137,7 +136,7 @@ export default function BookNowPage() {
               letterSpacing: '4px', textTransform: 'uppercase',
               color: gold, marginBottom: '12px', fontWeight: 600,
             }}>
-              Our Charter Fleet
+              Charter Fleet
             </p>
             <h2 style={{
               fontFamily: "'Cormorant Garamond', Georgia, serif",
@@ -179,7 +178,7 @@ export default function BookNowPage() {
         ) : (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
             {results.map(a => (
-              <AircraftCard key={a.id} aircraft={a} onClick={() => navigate(`/fleet/${a.id}`)} />
+              <AircraftCard key={a.id} aircraft={a} />
             ))}
           </div>
         )}
@@ -237,7 +236,7 @@ function SearchField({ label, icon, children }) {
   )
 }
 
-function AircraftCard({ aircraft, onClick }) {
+function AircraftCard({ aircraft }) {
   const cardRef = useRef(null)
   const [visible, setVisible] = useState(false)
 
@@ -267,10 +266,8 @@ function AircraftCard({ aircraft, onClick }) {
       display: 'grid', gridTemplateColumns: '320px 1fr',
       transition: 'transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s',
       boxShadow: '0 2px 12px rgba(20,37,68,0.08)',
-      cursor: 'pointer',
       transform: visible ? 'translateY(0)' : 'translateY(60px)',
     }} className="ac-card"
-      onClick={onClick}
       onMouseEnter={e => e.currentTarget.style.boxShadow = '0 8px 28px rgba(20,37,68,0.14)'}
       onMouseLeave={e => e.currentTarget.style.boxShadow = '0 2px 12px rgba(20,37,68,0.08)'}>
 
