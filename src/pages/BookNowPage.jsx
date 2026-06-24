@@ -193,6 +193,7 @@ export default function BookNowPage() {
           from { transform: translateY(0);    }
           to   { transform: translateY(100%); }
         }
+        .ac-card:hover .ac-img-inner { transform: scale(1.08); }
         @media (max-width: 700px) {
           .ac-card { grid-template-columns: 1fr !important; }
           .ac-img { aspect-ratio: 16/9 !important; }
@@ -263,7 +264,7 @@ function AircraftCard({ aircraft }) {
     <div ref={cardRef} style={{
       background: '#FFFFFF',
       borderRadius: '8px', overflow: 'hidden',
-      display: 'grid', gridTemplateColumns: '320px 1fr',
+      display: 'grid', gridTemplateColumns: '480px 1fr',
       transition: 'transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s',
       boxShadow: '0 2px 12px rgba(20,37,68,0.08)',
       transform: visible ? 'translateY(0)' : 'translateY(60px)',
@@ -274,7 +275,8 @@ function AircraftCard({ aircraft }) {
       {/* IMAGE */}
       <div style={{ overflow: 'hidden' }} className="ac-img">
         <img src={aircraft.image} alt={aircraft.name}
-          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+          className="ac-img-inner"
+          style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.5s ease' }}
           onError={(e) => { e.currentTarget.src = '/hero-bg.png' }} />
       </div>
 
